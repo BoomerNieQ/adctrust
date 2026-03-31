@@ -13,8 +13,8 @@ function useRandomPosition() {
     setIsMobile(mobile);
     if (!mobile) {
       setPos({
-        top:  `${20 + Math.random() * 55}vh`,
-        left: `${5  + Math.random() * 15}vw`,
+        top:  `${25 + Math.random() * 45}vh`,
+        left: "12px",
       });
     } else {
       setPos({ top: "0", left: "0" }); // unused on mobile
