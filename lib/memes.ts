@@ -22,10 +22,10 @@ export const MEDIA = {
   tubularBells:        media("Tubular Bells (Pt. I).mp3"),
   bassieAdriaaan:      media("Bassie & Adriaan - Achtergrondmuziek Plaaggeest - Afwassen (1).mp3"),
   // Rosine's life advise
-  iWannaGoHome:        media("I wanna go home #shorts.mp4"),
+  iWannaGoHome:        media("i-wanna-go-home.mp4"),
   moneyglitch:         media("Moneyglitch.mp4"),
-  bossRaise:           media("When you ask your boss for a raise #raise #boss #jobs #worklife #comedy #trend #relatable #fypシ.mp4"),
-  letsPush:            media("let's push guys it's almost weekend  ..... #youtube #youtubeshorts #almost #weekend ....mp4"),
+  bossRaise:           media("when-you-ask-your-boss-for-a-raise.mp4"),
+  letsPush:            media("lets-push-almost-weekend.mp4"),
   // Dominique meme
   shutUpGetBack:       media("Shut Up & Get Back to Work.mp4"),
 } as const;
@@ -39,7 +39,7 @@ export interface RandomMeme {
 export const RANDOM_MEMES: RandomMeme[] = [
   { file: media("Rundfunk - De hele klas heeft een onvoldoende.mp4"),    label: "De hele klas heeft een onvoldoende" },
   { file: media("Vrachtautochauffeur betaald niks  -   New Kids.mp4"),   label: "Vrachtautochauffeur betaalt niks" },
-  { file: media("Wat wil jij later worden_ #meme #internetgekkies #memes #tandarts #ikwillatertandartsworden.mp4"), label: "Wat wil jij later worden?" },
+  { file: media("wat-wil-jij-later-worden.mp4"),                                                               label: "Wat wil jij later worden?" },
   { file: media("Water, wil je mij vergiftigen ofzo_.mp4"),              label: "Water, wil je mij vergiftigen?" },
   { file: media("ik lijk op je- de-shayrons life.mp4"),                  label: "Ik lijk op je" },
   { file: media("www.dumpert.nl - Kamasutrabeurs.mp4"),                  label: "Kamasutrabeurs" },
@@ -49,7 +49,7 @@ export const RANDOM_MEMES: RandomMeme[] = [
   { file: media("Ik ga alleen naar de speeltuin en jij gaat NIET mee!.mp4"), label: "Ik ga alleen naar de speeltuin" },
   { file: media("Ik heb shi daggoetje geswiped je heet nu gemairo.mp4"), label: "Je heet nu gemairo" },
   { file: media("Ik wil gewoon toeteren. - Sluipschutters.mp4"),         label: "Ik wil gewoon toeteren" },
-  { file: media("Je moet me niet bellen  #meme #memes #internetgekkies #humor #jemoetmenietbellen #nederlands.mp4"), label: "Je moet me niet bellen" },
+  { file: media("je-moet-me-niet-bellen.mp4"),                                                                 label: "Je moet me niet bellen" },
   { file: media("Kindje Slaan.mp4"),                                     label: "Kindje Slaan" },
   { file: media("Pelle Houdt van Maaien, maar heeft geen zin in een interview (Internetgekkie).mp4"), label: "Pelle houdt van maaien" },
   { file: media("Vlogger glijdt uit.mp4"),                               label: "Vlogger glijdt uit" },
