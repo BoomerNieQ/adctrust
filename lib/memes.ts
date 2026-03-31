@@ -27,7 +27,7 @@ export const MEDIA = {
   bossRaise:           media("when-you-ask-your-boss-for-a-raise.mp4"),
   letsPush:            media("lets-push-almost-weekend.mp4"),
   // Dominique meme
-  shutUpGetBack:       media("Shut Up & Get Back to Work.mp4"),
+  shutUpGetBack:       media("shut-up-get-back-to-work.mp4"),
 } as const;
 
 // ─── Random memes (for the Random Memes button) ───────────────────────────────
