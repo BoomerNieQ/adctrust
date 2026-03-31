@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { prisma } from "@/lib/prisma";
 import { calculateScore } from "@/lib/score";
 import AuthButton from "@/components/AuthButton";
