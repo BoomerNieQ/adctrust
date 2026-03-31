@@ -1,0 +1,114 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ROSINE_MEMES } from "@/lib/memes";
+
+// Random fixed position, computed once on mount (avoids SSR mismatch)
+function useRandomPosition() {
+  const [pos, setPos] = useState<{ top: string; left: string } | null>(null);
+  useEffect(() => {
+    setPos({
+      top:  `${20 + Math.random() * 55}vh`,
+      left: `${5  + Math.random() * 15}vw`,
+    });
+  }, []);
+  return pos;
+}
+
+export default function RosineMemes() {
+  const [modalOpen, setModalOpen] = useState(false);
+  // index tracks which meme to show next; persists across open/close
+  const [index, setIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const pos = useRandomPosition();
+
+  const handleClick = () => {
+    if (modalOpen) return; // ignore while already open
+    setModalOpen(true);
+  };
+
+  const close = () => {
+    setModalOpen(false);
+    // advance to next meme for the next click
+    setIndex((prev) => (prev + 1) % ROSINE_MEMES.length);
+  };
+
+  const active = ROSINE_MEMES[index];
+
+  useEffect(() => {
+    if (modalOpen && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [modalOpen]);
+
+  // Don't render until position is known (avoids hydration mismatch)
+  if (!pos) return null;
+
+  return (
+    <>
+      <motion.button
+        onClick={handleClick}
+        className="fixed px-4 py-2 rounded-full font-boogaloo font-bold text-sm shadow-xl z-20"
+        style={{
+          top: pos.top,
+          left: pos.left,
+          background: "rgba(212,5,17,0.15)",
+          border: "2px solid rgba(212,5,17,0.45)",
+          color: "rgba(255,120,120,0.9)",
+        }}
+        whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
+        whileTap={{ scale: 0.93 }}
+        animate={{ y: [0, -6, 0] }}
+        transition={{ y: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
+      >
+        💅 Rosine&apos;s life advise
+      </motion.button>
+
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 cursor-pointer"
+            style={{ background: "rgba(10,10,10,0.92)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={close}
+          >
+            <motion.div
+              className="max-w-lg w-full rounded-2xl overflow-hidden shadow-2xl"
+              style={{ background: "#1C1C1C", border: "2px solid rgba(212,5,17,0.6)" }}
+              initial={{ scale: 0.6 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.6 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="h-1.5 w-full" style={{ background: "linear-gradient(to right, #D40511 50%, #FFCC00 50%)" }} />
+              <div className="relative w-full bg-black" style={{ minHeight: "280px", maxHeight: "60vh" }}>
+                <video
+                  ref={videoRef}
+                  src={active.file}
+                  className="w-full"
+                  autoPlay
+                  playsInline
+                  style={{ display: "block", maxHeight: "60vh", objectFit: "contain" }}
+                />
+              </div>
+              <div className="px-5 py-3 text-center">
+                <p className="font-boogaloo text-xs uppercase tracking-widest mb-1" style={{ color: "rgba(212,5,17,0.7)" }}>
+                  Rosine&apos;s life advise
+                </p>
+                <p className="font-boogaloo text-lg" style={{ color: "#FFCC00" }}>{active.label}</p>
+                <p className="text-white/25 text-xs mt-1">
+                  Klik om te sluiten · Knop opnieuw voor de volgende tip ({index + 1}/{ROSINE_MEMES.length})
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
