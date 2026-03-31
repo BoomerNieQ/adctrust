@@ -16,6 +16,7 @@ prisma/dev.db
 
 # Build
 dist/
+tsconfig.tsbuildinfo
 
 # OS
 .DS_Store
