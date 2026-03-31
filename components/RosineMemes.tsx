@@ -7,13 +7,20 @@ import { ROSINE_MEMES } from "@/lib/memes";
 // Random fixed position, computed once on mount (avoids SSR mismatch)
 function useRandomPosition() {
   const [pos, setPos] = useState<{ top: string; left: string } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    setPos({
-      top:  `${20 + Math.random() * 55}vh`,
-      left: `${5  + Math.random() * 15}vw`,
-    });
+    const mobile = window.innerWidth < 640;
+    setIsMobile(mobile);
+    if (!mobile) {
+      setPos({
+        top:  `${20 + Math.random() * 55}vh`,
+        left: `${5  + Math.random() * 15}vw`,
+      });
+    } else {
+      setPos({ top: "0", left: "0" }); // unused on mobile
+    }
   }, []);
-  return pos;
+  return { pos, isMobile };
 }
 
 export default function RosineMemes() {
@@ -21,7 +28,7 @@ export default function RosineMemes() {
   // index tracks which meme to show next; persists across open/close
   const [index, setIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const pos = useRandomPosition();
+  const { pos, isMobile } = useRandomPosition();
 
   const handleClick = () => {
     if (modalOpen) return; // ignore while already open
@@ -46,25 +53,40 @@ export default function RosineMemes() {
   // Don't render until position is known (avoids hydration mismatch)
   if (!pos) return null;
 
+  const buttonStyle = {
+    background: "rgba(212,5,17,0.15)",
+    border: "2px solid rgba(212,5,17,0.45)",
+    color: "rgba(255,120,120,0.9)",
+  };
+
   return (
     <>
-      <motion.button
-        onClick={handleClick}
-        className="fixed px-4 py-2 rounded-full font-boogaloo font-bold text-sm shadow-xl z-20"
-        style={{
-          top: pos.top,
-          left: pos.left,
-          background: "rgba(212,5,17,0.15)",
-          border: "2px solid rgba(212,5,17,0.45)",
-          color: "rgba(255,120,120,0.9)",
-        }}
-        whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
-        whileTap={{ scale: 0.93 }}
-        animate={{ y: [0, -6, 0] }}
-        transition={{ y: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
-      >
-        💅 Rosine&apos;s life advise
-      </motion.button>
+      {/* On mobile: inline button (not fixed/floating) */}
+      {isMobile ? (
+        <div className="relative z-10 flex justify-center pb-4">
+          <motion.button
+            onClick={handleClick}
+            className="px-4 py-2 rounded-full font-boogaloo font-bold text-sm shadow-xl"
+            style={buttonStyle}
+            whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
+            whileTap={{ scale: 0.93 }}
+          >
+            💅 Rosine&apos;s life advise
+          </motion.button>
+        </div>
+      ) : (
+        <motion.button
+          onClick={handleClick}
+          className="fixed px-4 py-2 rounded-full font-boogaloo font-bold text-sm shadow-xl z-20"
+          style={{ top: pos.top, left: pos.left, ...buttonStyle }}
+          whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
+          whileTap={{ scale: 0.93 }}
+          animate={{ y: [0, -6, 0] }}
+          transition={{ y: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
+        >
+          💅 Rosine&apos;s life advise
+        </motion.button>
+      )}
 
       <AnimatePresence>
         {modalOpen && (
