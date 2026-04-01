@@ -10,6 +10,7 @@ import StatsSection from "@/components/StatsSection";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import PinkFence from "@/components/PinkFence";
 import RosineMemes from "@/components/RosineMemes";
+import BirthdayBanner from "@/components/BirthdayBanner";
 import { TAGLINES } from "@/lib/memes";
 
 async function getInitialData() {
@@ -59,14 +60,8 @@ export default async function Home() {
       {/* Header */}
       <header className="relative z-30 flex items-center justify-between px-5 sm:px-8 py-3 max-w-[1400px] mx-auto">
         <div className="flex items-center gap-3">
-          <div
-            className="px-4 py-1.5 rounded-lg font-fredoka font-bold text-2xl tracking-wider"
-            style={{ background: "#FFCC00", color: "#1C1C1C" }}
-          >
-            DHL
-          </div>
           <span className="text-white/40 font-boogaloo hidden sm:block text-sm">
-            ADC · Vertrouwensbarometer
+            Vertrouwensbarometer
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -77,9 +72,6 @@ export default async function Home() {
 
       {/* Title section */}
       <div className="relative z-10 text-center px-4 py-4 pb-6">
-        <p className="text-white/30 text-xs font-boogaloo uppercase tracking-[0.2em] mb-2">
-          ADC Team · Vertrouwensbarometer
-        </p>
         <h1 className="text-5xl sm:text-6xl font-boogaloo text-white leading-tight">
           Vertrouwen in{" "}
           <span
@@ -95,7 +87,7 @@ export default async function Home() {
           </span>
         </h1>
         <p className="text-white/35 font-boogaloo mt-1 text-sm">
-          Team Manager · ADC · DHL
+          Team Manager
         </p>
         <p
           className="mt-3 font-boogaloo text-base px-5 py-2 rounded-full inline-block"
@@ -108,6 +100,8 @@ export default async function Home() {
           "{tagline}"
         </p>
       </div>
+
+      <BirthdayBanner />
 
       {/* Barometer — full width container */}
       <main className="relative z-10 px-4 sm:px-6 pb-16 max-w-[1400px] mx-auto">
@@ -125,7 +119,7 @@ export default async function Home() {
       </div>
 
       <p className="relative z-10 text-white/15 text-xs text-center font-boogaloo pb-10">
-        Stem elke 30 seconden
+        Stem elke 30 seconden · Alleen voor medewerkers
       </p>
 
       <BackgroundMusic />

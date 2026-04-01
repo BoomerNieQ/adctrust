@@ -8,9 +8,9 @@ export const translations = {
   nl: {
     // Header / page
     taglinePrefix: "",
-    headerSub: "ADC · Vertrouwensbarometer",
+    headerSub: "Vertrouwensbarometer",
     titleMain: "Vertrouwen in",
-    subtitle: "Team Manager · ADC · DHL",
+    subtitle: "Team Manager",
     voteInterval: "Stem elke 30 seconden",
     langToggle: "🇫🇷 Frans",
 
@@ -64,7 +64,7 @@ export const translations = {
 
     // Birthday
     birthdayTitle: "🎂 Verjaardagen",
-    birthdaySubtitle: "Team ADC verjaardagskalender",
+    birthdaySubtitle: "Verjaardagskalender van het team",
     birthdayAdd: "Voeg jouw verjaardag toe",
     birthdayAddBtn: "Toevoegen",
     birthdayEmpty: "Nog geen verjaardagen. Voeg die van jezelf toe!",
@@ -91,9 +91,9 @@ export const translations = {
   },
   fr: {
     taglinePrefix: "",
-    headerSub: "ADC · Baromètre de confiance",
+    headerSub: "Baromètre de confiance",
     titleMain: "Confiance en",
-    subtitle: "Team Manager · ADC · DHL",
+    subtitle: "Team Manager",
     voteInterval: "Voter toutes les 30 secondes",
     langToggle: "🇳🇱 Néerlandais",
 
@@ -140,7 +140,7 @@ export const translations = {
     rubenClose: "Cliquez pour fermer",
 
     birthdayTitle: "🎂 Anniversaires",
-    birthdaySubtitle: "Calendrier d'anniversaires de l'équipe ADC",
+    birthdaySubtitle: "Calendrier d'anniversaires de l'équipe",
     birthdayAdd: "Ajoutez votre anniversaire",
     birthdayAddBtn: "Ajouter",
     birthdayEmpty: "Pas encore d'anniversaires. Ajoutez le vôtre !",

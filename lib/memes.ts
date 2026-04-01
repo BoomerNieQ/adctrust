@@ -89,7 +89,7 @@ export const positiveMemes: Meme[] = [
   },
   {
     text: "Ik vind het helemaal mooi! 🙌",
-    subtext: "ADC staat achter je, Dom!",
+    subtext: "Het team staat achter je, Dom!",
     emoji: "🎉",
     mediaUrl: MEDIA.blikje,
     isVideo: true,
@@ -97,7 +97,7 @@ export const positiveMemes: Meme[] = [
   },
   {
     text: "TOP! Helemaal mooi! ⭐",
-    subtext: "DHL goedgekeurd",
+    subtext: "Goedgekeurd door het team",
     emoji: "⭐",
     mediaUrl: MEDIA.blikje,
     isVideo: true,
@@ -108,7 +108,7 @@ export const positiveMemes: Meme[] = [
 export const negativeMemes: Meme[] = [
   {
     text: "SCHANDE! 😤",
-    subtext: "ADC spreekt zich uit",
+    subtext: "Het team spreekt zich uit",
     emoji: "😤",
     mediaUrl: MEDIA.schande,
     isVideo: true,
@@ -156,11 +156,10 @@ export function getRandomMeme(type: MemeType): Meme {
 }
 
 export const TAGLINES = [
-  "Hoeveel vertrouwen heeft ADC in Dominique?",
+  "Hoeveel vertrouwen heeft het team in Dominique?",
   "De eerlijke meting van het team",
-  "Sneller bezorgd dan een DHL pakket",
-  "Gebaseerd op échte ADC-meningen",
+  "Gebaseerd op échte teamopinies",
   "Team Manager performance indicator — unofficial edition",
   "Want iemand moet het bijhouden",
-  "Betrouwbaarder dan de bezorgtijd",
+  "Betrouwbaarder dan officiële feedback",
 ];

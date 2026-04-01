@@ -70,13 +70,7 @@ export default function LeftPanel({ score, count, positiveCount, negativeCount, 
           D
         </div>
         <h3 className="font-fredoka font-bold text-white text-lg leading-tight">Dominique</h3>
-        <p className="text-white/40 text-xs font-boogaloo mt-0.5">Team Manager · ADC</p>
-        <div
-          className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full text-xs font-boogaloo"
-          style={{ background: "rgba(255,204,0,0.1)", color: "#FFCC00", border: "1px solid rgba(255,204,0,0.2)" }}
-        >
-          <span>🏢</span> DHL Express NL
-        </div>
+        <p className="text-white/40 text-xs font-boogaloo mt-0.5">Team Manager</p>
       </div>
 
       {/* Status */}
@@ -118,8 +112,7 @@ export default function LeftPanel({ score, count, positiveCount, negativeCount, 
 
       {/* Footer */}
       <p className="text-white/20 text-xs text-center font-boogaloo border-t border-white/5 pt-3">
-        📦 Stem elke 10 min
-        <br />Alleen @dhl.com
+        Stem elke 30 seconden
       </p>
     </div>
   );

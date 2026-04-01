@@ -90,13 +90,13 @@ function CrackVignette({ score }: { score: number }) {
 }
 
 function getStatusLabel(score: number): string {
-  if (score > 75)  return "🏆 Dominique is de beste Team Manager van ADC!";
+  if (score > 75)  return "🏆 Dominique is de beste Team Manager!";
   if (score > 50)  return "😊 Overwegend vertrouwen in Dominique!";
   if (score > 25)  return "🤔 Positief, maar het kan altijd beter, Dom";
   if (score > 0)   return "😐 Twijfelachtig — net boven nul";
   if (score === 0) return "⚖️ Precies in balans!";
   if (score > -25) return "😕 Lichtelijk wantrouwig...";
-  if (score > -50) return "😠 Het vertrouwen bij ADC daalt";
+  if (score > -50) return "😠 Het vertrouwen daalt";
   if (score > -75) return "💀 Pakket vermist — net als het vertrouwen";
   return "🚨 CRISIS! Dominique heeft wat uit te leggen!";
 }
