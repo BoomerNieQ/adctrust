@@ -84,7 +84,12 @@ export default function MaraudersGate({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (dismissed || isMobile || phase !== "locked") return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key.length !== 1 || e.ctrlKey || e.metaKey) return;
+      if (e.ctrlKey || e.metaKey) return;
+      if (e.key === "Backspace") {
+        setTyped((prev) => prev.slice(0, -1));
+        return;
+      }
+      if (e.key.length !== 1) return;
       setTyped((prev) => {
         const next = (prev + e.key.toLowerCase()).slice(-SECRET.length);
         if (next === SECRET) triggerReveal();
