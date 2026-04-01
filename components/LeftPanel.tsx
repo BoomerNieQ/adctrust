@@ -7,6 +7,7 @@ interface LeftPanelProps {
   count: number;
   positiveCount: number;
   negativeCount: number;
+  onAvatarClick?: () => void;
 }
 
 function StatCard({ label, value, color }: { label: string; value: string | number; color?: string }) {
@@ -49,7 +50,7 @@ function TrustMeter({ score }: { score: number }) {
   );
 }
 
-export default function LeftPanel({ score, count, positiveCount, negativeCount }: LeftPanelProps) {
+export default function LeftPanel({ score, count, positiveCount, negativeCount, onAvatarClick }: LeftPanelProps) {
   const positivePct = count > 0 ? Math.round((positiveCount / count) * 100) : 0;
   const negativePct = count > 0 ? Math.round((negativeCount / count) * 100) : 0;
 
@@ -61,8 +62,10 @@ export default function LeftPanel({ score, count, positiveCount, negativeCount }
       {/* DHL Profile */}
       <div className="text-center pb-4 border-b border-white/10">
         <div
-          className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl font-fredoka font-bold"
+          className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl font-fredoka font-bold cursor-pointer select-none"
           style={{ background: "linear-gradient(135deg, #FFCC00, #D40511)", color: "#1C1C1C" }}
+          onClick={onAvatarClick}
+          title="🤫"
         >
           D
         </div>

@@ -17,6 +17,9 @@ import RosineMemes from "./RosineMemes";
 import DominiqueMeme from "./DominiqueMeme";
 import Guestbook from "./Guestbook";
 import RubenAppreciation from "./RubenAppreciation";
+import BirthdayCalendar from "./BirthdayCalendar";
+import BirthdayModal from "./BirthdayModal";
+import { WeeklyMemesModal, useEasterEgg } from "./DominiqueWeeklyMemes";
 
 interface ScoreData {
   score: number;
@@ -140,6 +143,8 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
   const [redFlash, setRedFlash] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [welcomeData, setWelcomeData] = useState<{ firstName: string; isReturning: boolean } | null>(null);
+  const [birthdayNames, setBirthdayNames] = useState<string[] | null>(null);
+  const easterEgg = useEasterEgg();
 
   const prevScoreRef = useRef(initialData.score);
   const prevStatusRef = useRef(status);
@@ -261,8 +266,25 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
           <WelcomeModal
             firstName={welcomeData.firstName}
             isReturning={welcomeData.isReturning}
-            onClose={() => setWelcomeData(null)}
+            onClose={async () => {
+              setWelcomeData(null);
+              // Check birthdays
+              try {
+                const res = await fetch("/api/birthdays");
+                if (res.ok) {
+                  const entries: Array<{ day: number; month: number; user: { firstName: string; lastName: string } }> = await res.json();
+                  const today = new Date();
+                  const names = entries
+                    .filter((e) => e.day === today.getDate() && e.month === today.getMonth() + 1)
+                    .map((e) => `${e.user.firstName} ${e.user.lastName}`);
+                  if (names.length > 0) setBirthdayNames(names);
+                }
+              } catch { /* silent */ }
+            }}
           />
+        )}
+        {birthdayNames && (
+          <BirthdayModal names={birthdayNames} onClose={() => setBirthdayNames(null)} />
         )}
       </AnimatePresence>
 
@@ -276,6 +298,7 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
             count={data.count}
             positiveCount={data.positiveCount}
             negativeCount={data.negativeCount}
+            onAvatarClick={easterEgg.handleClick}
           />
         </div>
 
@@ -298,9 +321,18 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
               <RandomMemeButton />
               <DominiqueMeme />
               <Guestbook />
+              <BirthdayCalendar />
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 mt-1">
               <RubenAppreciation />
             </div>
             {(session?.user as any)?.isAdmin && <ResetButton />}
+            {/* Easter egg weekly memes modal */}
+            <AnimatePresence>
+              {easterEgg.open && (
+                <WeeklyMemesModal onClose={() => easterEgg.setOpen(false)} />
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Status message */}

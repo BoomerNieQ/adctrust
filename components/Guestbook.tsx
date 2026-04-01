@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 interface Entry {
   id: string;
@@ -12,6 +13,7 @@ interface Entry {
 }
 
 export default function Guestbook() {
+  const { t } = useLang();
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -66,7 +68,7 @@ export default function Guestbook() {
         whileHover={{ scale: 1.05, background: "rgba(255,204,0,0.22)" }}
         whileTap={{ scale: 0.95 }}
       >
-        📖 Gastenboek
+        {t.btnGuestbook}
       </motion.button>
 
       <AnimatePresence>
@@ -98,10 +100,10 @@ export default function Guestbook() {
               {/* Title */}
               <div className="px-6 pt-5 pb-3 flex-shrink-0">
                 <h2 className="font-boogaloo text-2xl" style={{ color: "#FFCC00" }}>
-                  📖 Gastenboek
+                  {t.guestbookTitle}
                 </h2>
                 <p className="text-white/40 text-xs font-boogaloo mt-0.5">
-                  Laat een berichtje achter voor Dominique
+                  {t.guestbookSubtitle}
                 </p>
               </div>
 
@@ -116,7 +118,7 @@ export default function Guestbook() {
                       ref={textareaRef}
                       value={message}
                       onChange={(e) => setMessage(e.target.value.slice(0, 300))}
-                      placeholder="Schrijf iets..."
+                      placeholder={t.guestbookPlaceholder}
                       rows={3}
                       className="w-full bg-transparent text-white/90 text-sm font-boogaloo resize-none outline-none placeholder-white/25"
                       onKeyDown={(e) => {
@@ -133,7 +135,7 @@ export default function Guestbook() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        {sending ? "..." : "Verstuur"}
+                        {sending ? "..." : t.guestbookSend}
                       </motion.button>
                     </div>
                     {error && <p className="text-red-400 text-xs mt-1 font-boogaloo">{error}</p>}
@@ -141,7 +143,7 @@ export default function Guestbook() {
                 </div>
               ) : (
                 <p className="px-6 pb-4 text-white/40 text-sm font-boogaloo flex-shrink-0">
-                  Log in om een berichtje achter te laten.
+                  {t.guestbookLoginPrompt}
                 </p>
               )}
 
@@ -152,7 +154,7 @@ export default function Guestbook() {
               <div className="overflow-y-auto flex-1 px-6 py-4 space-y-3">
                 {entries.length === 0 && (
                   <p className="text-white/30 text-sm font-boogaloo text-center py-8">
-                    Nog geen berichten. Wees de eerste!
+                    {t.guestbookEmpty}
                   </p>
                 )}
                 {entries.map((entry, i) => (
@@ -178,7 +180,7 @@ export default function Guestbook() {
               {/* Footer */}
               <div className="px-6 py-3 text-center flex-shrink-0">
                 <button onClick={() => setOpen(false)} className="text-white/25 text-xs font-boogaloo hover:text-white/50 transition-colors">
-                  Sluiten
+                  {t.guestbookClose}
                 </button>
               </div>
             </motion.div>

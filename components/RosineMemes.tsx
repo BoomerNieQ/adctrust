@@ -66,7 +66,7 @@ export default function RosineMemes() {
         <div className="relative z-10 flex justify-center pb-4">
           <motion.button
             onClick={handleClick}
-            className="px-4 py-2 rounded-full font-boogaloo font-bold text-sm shadow-xl"
+            className="px-5 py-2.5 rounded-full font-boogaloo font-bold text-base shadow-xl"
             style={buttonStyle}
             whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
             whileTap={{ scale: 0.93 }}
@@ -77,7 +77,7 @@ export default function RosineMemes() {
       ) : (
         <motion.button
           onClick={handleClick}
-          className="fixed px-4 py-2 rounded-full font-boogaloo font-bold text-sm shadow-xl z-20"
+          className="fixed px-5 py-2.5 rounded-full font-boogaloo font-bold text-base shadow-xl z-20"
           style={{ top: pos.top, left: pos.left, ...buttonStyle }}
           whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
           whileTap={{ scale: 0.93 }}

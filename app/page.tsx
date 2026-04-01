@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
 import { calculateScore } from "@/lib/score";
 import AuthButton from "@/components/AuthButton";
+import LanguageToggle from "@/components/LanguageToggle";
 import WindmillBackground from "@/components/WindmillBackground";
 import VertrouwensBarometer from "@/components/VertrouwensBarometer";
 import StatsSection from "@/components/StatsSection";
@@ -68,7 +69,10 @@ export default async function Home() {
             ADC · Vertrouwensbarometer
           </span>
         </div>
-        <AuthButton />
+        <div className="flex items-center gap-2">
+          <LanguageToggle />
+          <AuthButton />
+        </div>
       </header>
 
       {/* Title section */}
@@ -121,7 +125,7 @@ export default async function Home() {
       </div>
 
       <p className="relative z-10 text-white/15 text-xs text-center font-boogaloo pb-10">
-        Stem elke 10 minuten
+        Stem elke 30 seconden
       </p>
 
       <BackgroundMusic />

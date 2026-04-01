@@ -22,6 +22,8 @@ export const MEDIA = {
   heetJeEchtZo:        media("Heet je echt zo.mp4"),
   tubularBells:        media("tubular-bells.mp3"),
   bassieAdriaaan:      media("bassie-adriaan-achtergrondmuziek.mp3"),
+  happyBirthday:       media("happy-birthday.mp3"),
+  kutkind:             media("kutkind.m4a"),
   // Rosine's life advise
   iWannaGoHome:        media("i-wanna-go-home.mp4"),
   moneyglitch:         media("Moneyglitch.mp4"),
