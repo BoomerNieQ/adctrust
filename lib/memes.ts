@@ -17,10 +17,10 @@ function media(filename: string): string {
 // ─── Known media files ────────────────────────────────────────────────────────
 export const MEDIA = {
   blikje:              media("blikje in de water.mp4"),
-  michaelScottNo:      media("Michael Scott No God, Please No! Meme  The Office Meme.mp4"),
+  michaelScottNo:      media("michael-scott-no-god-please-no.mp4"),
   heetJeEchtZo:        media("Heet je echt zo.mp4"),
-  tubularBells:        media("Tubular Bells (Pt. I).mp3"),
-  bassieAdriaaan:      media("Bassie & Adriaan - Achtergrondmuziek Plaaggeest - Afwassen (1).mp3"),
+  tubularBells:        media("tubular-bells.mp3"),
+  bassieAdriaaan:      media("bassie-adriaan-achtergrondmuziek.mp3"),
   // Rosine's life advise
   iWannaGoHome:        media("i-wanna-go-home.mp4"),
   moneyglitch:         media("Moneyglitch.mp4"),
@@ -43,10 +43,10 @@ export const RANDOM_MEMES: RandomMeme[] = [
   { file: media("water-wil-je-mij-vergiftigen.mp4"),                     label: "Water, wil je mij vergiftigen?" },
   { file: media("ik lijk op je- de-shayrons life.mp4"),                  label: "Ik lijk op je" },
   { file: media("www.dumpert.nl - Kamasutrabeurs.mp4"),                  label: "Kamasutrabeurs" },
-  { file: media("Had je een probleem_ (Thug Life).mp4"),                 label: "Had je een probleem?" },
-  { file: media("BOODSCHAP!!!.mp4"),                                     label: "BOODSCHAP!!!" },
+  { file: media("had-je-een-probleem-thug-life.mp4"),                    label: "Had je een probleem?" },
+  { file: media("boodschap.mp4"),                                        label: "BOODSCHAP!!!" },
   { file: media("De verkeerde kant.mp4"),                                label: "De verkeerde kant" },
-  { file: media("Ik ga alleen naar de speeltuin en jij gaat NIET mee!.mp4"), label: "Ik ga alleen naar de speeltuin" },
+  { file: media("ik-ga-alleen-naar-de-speeltuin.mp4"),                   label: "Ik ga alleen naar de speeltuin" },
   { file: media("Ik heb shi daggoetje geswiped je heet nu gemairo.mp4"), label: "Je heet nu gemairo" },
   { file: media("Ik wil gewoon toeteren. - Sluipschutters.mp4"),         label: "Ik wil gewoon toeteren" },
   { file: media("je-moet-me-niet-bellen.mp4"),                                                                 label: "Je moet me niet bellen" },
