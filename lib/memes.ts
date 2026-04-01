@@ -17,6 +17,7 @@ function media(filename: string): string {
 // ─── Known media files ────────────────────────────────────────────────────────
 export const MEDIA = {
   blikje:              media("blikje in de water.mp4"),
+  schande:             media("Schande.mp4"),
   michaelScottNo:      media("michael-scott-no-god-please-no.mp4"),
   heetJeEchtZo:        media("Heet je echt zo.mp4"),
   tubularBells:        media("tubular-bells.mp3"),
@@ -54,6 +55,10 @@ export const RANDOM_MEMES: RandomMeme[] = [
   { file: media("pelle-houdt-van-maaien.mp4"),                           label: "Pelle houdt van maaien" },
   { file: media("Vlogger glijdt uit.mp4"),                               label: "Vlogger glijdt uit" },
   { file: media("Waterhoofd.mp4"),                                       label: "Waterhoofd" },
+  { file: media("56-ans.mp4"),                                           label: "56 ans" },
+  { file: media("ca-te-donnera-des-couleurs.mp4"),                       label: "Ça te donnera des couleurs" },
+  { file: media("ta-geule.mp4"),                                         label: "Ta gueule" },
+  { file: media("plante.mp4"),                                           label: "Plante" },
 ];
 
 // ─── Rosine's life advise (sequential, always starts with iWannaGoHome) ───────
@@ -99,6 +104,14 @@ export const positiveMemes: Meme[] = [
 ];
 
 export const negativeMemes: Meme[] = [
+  {
+    text: "SCHANDE! 😤",
+    subtext: "ADC spreekt zich uit",
+    emoji: "😤",
+    mediaUrl: MEDIA.schande,
+    isVideo: true,
+    type: "negative",
+  },
   {
     text: "NO NO NO NO NO! 😱",
     subtext: "Michael Scott is teleurgesteld",

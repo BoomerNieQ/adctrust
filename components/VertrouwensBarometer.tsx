@@ -15,6 +15,8 @@ import { calculateScore } from "@/lib/score";
 import RandomMemeButton from "./RandomMemeButton";
 import RosineMemes from "./RosineMemes";
 import DominiqueMeme from "./DominiqueMeme";
+import Guestbook from "./Guestbook";
+import RubenAppreciation from "./RubenAppreciation";
 
 interface ScoreData {
   score: number;
@@ -295,6 +297,8 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
             <div className="flex flex-wrap justify-center gap-2">
               <RandomMemeButton />
               <DominiqueMeme />
+              <Guestbook />
+              <RubenAppreciation />
             </div>
             {(session?.user as any)?.isAdmin && <ResetButton />}
           </div>
