@@ -40,7 +40,6 @@ export const RANDOM_MEMES: RandomMeme[] = [
   { file: media("Rundfunk - De hele klas heeft een onvoldoende.mp4"),    label: "De hele klas heeft een onvoldoende" },
   { file: media("Vrachtautochauffeur betaald niks  -   New Kids.mp4"),   label: "Vrachtautochauffeur betaalt niks" },
   { file: media("wat-wil-jij-later-worden.mp4"),                                                               label: "Wat wil jij later worden?" },
-  { file: media("Water, wil je mij vergiftigen ofzo_.mp4"),              label: "Water, wil je mij vergiftigen?" },
   { file: media("ik lijk op je- de-shayrons life.mp4"),                  label: "Ik lijk op je" },
   { file: media("www.dumpert.nl - Kamasutrabeurs.mp4"),                  label: "Kamasutrabeurs" },
   { file: media("Had je een probleem_ (Thug Life).mp4"),                 label: "Had je een probleem?" },
@@ -51,7 +50,6 @@ export const RANDOM_MEMES: RandomMeme[] = [
   { file: media("Ik wil gewoon toeteren. - Sluipschutters.mp4"),         label: "Ik wil gewoon toeteren" },
   { file: media("je-moet-me-niet-bellen.mp4"),                                                                 label: "Je moet me niet bellen" },
   { file: media("Kindje Slaan.mp4"),                                     label: "Kindje Slaan" },
-  { file: media("Pelle Houdt van Maaien, maar heeft geen zin in een interview (Internetgekkie).mp4"), label: "Pelle houdt van maaien" },
   { file: media("Vlogger glijdt uit.mp4"),                               label: "Vlogger glijdt uit" },
   { file: media("Waterhoofd.mp4"),                                       label: "Waterhoofd" },
 ];
