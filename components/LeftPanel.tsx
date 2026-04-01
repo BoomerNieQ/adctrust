@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 interface LeftPanelProps {
   score: number;
@@ -25,16 +26,17 @@ function StatCard({ label, value, color }: { label: string; value: string | numb
 }
 
 function TrustMeter({ score }: { score: number }) {
+  const { t } = useLang();
   const level =
-    score > 75 ? { label: "Absoluut vertrouwen", color: "#22c55e", icon: "🏆" } :
-    score > 50 ? { label: "Sterk vertrouwen", color: "#4ade80", icon: "😊" } :
-    score > 25 ? { label: "Licht vertrouwen", color: "#a3e635", icon: "🤔" } :
-    score > 0  ? { label: "Twijfelachtig", color: "#FFCC00", icon: "😐" } :
-    score === 0 ? { label: "Neutraal", color: "#FFCC00", icon: "⚖️" } :
-    score > -25 ? { label: "Licht wantrouwen", color: "#fb923c", icon: "😕" } :
-    score > -50 ? { label: "Wantrouwen", color: "#f97316", icon: "😠" } :
-    score > -75 ? { label: "Sterk wantrouwen", color: "#D40511", icon: "💀" } :
-    { label: "Crisis!", color: "#D40511", icon: "🚨" };
+    score > 75 ? { label: t.trustAbsolute, color: "#22c55e", icon: "🏆" } :
+    score > 50 ? { label: t.trustStrong, color: "#4ade80", icon: "😊" } :
+    score > 25 ? { label: t.trustLight, color: "#a3e635", icon: "🤔" } :
+    score > 0  ? { label: t.trustDoubtful, color: "#FFCC00", icon: "😐" } :
+    score === 0 ? { label: t.trustNeutral, color: "#FFCC00", icon: "⚖️" } :
+    score > -25 ? { label: t.trustLightDistrust, color: "#fb923c", icon: "😕" } :
+    score > -50 ? { label: t.trustDistrust, color: "#f97316", icon: "😠" } :
+    score > -75 ? { label: t.trustStrongDistrust, color: "#D40511", icon: "💀" } :
+    { label: t.trustCrisis, color: "#D40511", icon: "🚨" };
 
   return (
     <div
@@ -45,12 +47,13 @@ function TrustMeter({ score }: { score: number }) {
       <p className="font-boogaloo font-bold text-sm" style={{ color: level.color }}>
         {level.label}
       </p>
-      <p className="text-white/30 text-xs mt-0.5 font-boogaloo">Huidige status</p>
+      <p className="text-white/30 text-xs mt-0.5 font-boogaloo">{t.currentStatus}</p>
     </div>
   );
 }
 
 export default function LeftPanel({ score, count, positiveCount, negativeCount, onAvatarClick }: LeftPanelProps) {
+  const { t } = useLang();
   const positivePct = count > 0 ? Math.round((positiveCount / count) * 100) : 0;
   const negativePct = count > 0 ? Math.round((negativeCount / count) * 100) : 0;
 
@@ -78,12 +81,12 @@ export default function LeftPanel({ score, count, positiveCount, negativeCount, 
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-2">
-        <StatCard label="Totaal stemmen" value={count} />
-        <StatCard label="Huidige score" value={score > 0 ? `+${score}` : score} color={
+        <StatCard label={t.totalVotes} value={count} />
+        <StatCard label={t.scoreLabel} value={score > 0 ? `+${score}` : score} color={
           score > 0 ? "#22c55e" : score < 0 ? "#D40511" : "#FFCC00"
         } />
-        <StatCard label="👍 Positief" value={`${positivePct}%`} color="#4ade80" />
-        <StatCard label="👎 Negatief" value={`${negativePct}%`} color="#D40511" />
+        <StatCard label={`👍 ${t.positive}`} value={`${positivePct}%`} color="#4ade80" />
+        <StatCard label={`👎 ${t.negative}`} value={`${negativePct}%`} color="#D40511" />
       </div>
 
       {/* Positive/negative bar */}
@@ -104,15 +107,15 @@ export default function LeftPanel({ score, count, positiveCount, negativeCount, 
             />
           </div>
           <div className="flex justify-between text-xs font-boogaloo text-white/30 mt-1">
-            <span>Vertrouwen</span>
-            <span>Wantrouwen</span>
+            <span>{t.trustLabel}</span>
+            <span>{t.distrustLabel}</span>
           </div>
         </div>
       )}
 
       {/* Footer */}
       <p className="text-white/20 text-xs text-center font-boogaloo border-t border-white/5 pt-3">
-        Stem elke 30 seconden
+        {t.voteInterval}
       </p>
     </div>
   );

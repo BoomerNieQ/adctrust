@@ -4,8 +4,10 @@ import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import LoginModal from "./LoginModal";
+import { useLang } from "@/lib/i18n";
 
 export default function AuthButton() {
+  const { t } = useLang();
   const { data: session, status } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -37,7 +39,7 @@ export default function AuthButton() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Inloggen
+          {t.loginSubmit}
         </motion.button>
         <AnimatePresence>
           {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
@@ -99,7 +101,7 @@ export default function AuthButton() {
                 style={{ color: "#FFCC00" }}
                 onClick={() => setMenuOpen(false)}
               >
-                ⚙️ Admin
+                {t.adminBtn}
               </a>
             )}
 
@@ -111,7 +113,7 @@ export default function AuthButton() {
               className="w-full flex items-center gap-2 px-3 py-2 rounded-lg font-boogaloo text-sm hover:bg-white/10 transition-colors text-left"
               style={{ color: "#D40511" }}
             >
-              🚪 Uitloggen
+              🚪 {t.logout}
             </button>
           </motion.div>
         )}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 interface BirthdayEntry {
   id: string;
@@ -10,9 +11,8 @@ interface BirthdayEntry {
   user: { firstName: string; lastName: string };
 }
 
-const MONTHS_NL = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
-
 export default function BirthdayBanner() {
+  const { t } = useLang();
   const [entries, setEntries] = useState<BirthdayEntry[]>([]);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function BirthdayBanner() {
             className="max-w-xl mx-auto mb-2 px-4 py-2 rounded-full text-center font-boogaloo text-sm"
             style={{ background: "rgba(255,204,0,0.15)", border: "1px solid rgba(255,204,0,0.4)", color: "#FFCC00" }}
           >
-            🎂 {todayBdays.map((e) => `${e.user.firstName} ${e.user.lastName}`).join(" & ")} heeft vandaag verjaardag! 🎉
+            🎂 {todayBdays.map((e) => `${e.user.firstName} ${e.user.lastName}`).join(" & ")} {t.birthdayBannerToday}
           </motion.div>
         )}
       </AnimatePresence>
@@ -70,7 +70,7 @@ export default function BirthdayBanner() {
               className="font-boogaloo text-xs px-3 py-1 rounded-full"
               style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.45)" }}
             >
-              🎁 {e.user.firstName} · {e.day} {MONTHS_NL[e.month - 1]}
+              🎁 {e.user.firstName} · {e.day} {(t.monthsShort as string[])[e.month - 1]}
             </span>
           ))}
         </div>

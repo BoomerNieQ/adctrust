@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 interface DayBucket {
   date: string;
@@ -25,14 +26,9 @@ interface MonthBucket {
   emoji: string;
 }
 
-// ─── Day labels ──────────────────────────────────────────────────────────────
-const DAYS_SHORT = ["zo", "ma", "di", "wo", "do", "vr", "za"];
-
-function formatDateLabel(dateStr: string): string {
+function formatDateLabel(dateStr: string, monthsShort: string[]): string {
   const d = new Date(dateStr + "T12:00:00Z");
-  const day = d.getUTCDate();
-  const mon = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"][d.getUTCMonth()];
-  return `${day} ${mon}`;
+  return `${d.getUTCDate()} ${monthsShort[d.getUTCMonth()]}`;
 }
 
 function formatDayShort(dateStr: string): string {
@@ -42,6 +38,7 @@ function formatDayShort(dateStr: string): string {
 
 // ─── Daily Bar Chart ─────────────────────────────────────────────────────────
 function DailyChart({ days }: { days: DayBucket[] }) {
+  const { t } = useLang();
   // Show last 14 days
   const visible = days.slice(-14);
   const maxAbs = Math.max(1, ...visible.map((d) => Math.abs(d.score)));
@@ -52,9 +49,9 @@ function DailyChart({ days }: { days: DayBucket[] }) {
       style={{ background: "#242424", border: "1px solid rgba(255,204,0,0.15)" }}
     >
       <h3 className="font-boogaloo text-lg mb-1" style={{ color: "#FFCC00" }}>
-        📅 Score per dag
+        {t.statsPerDay}
       </h3>
-      <p className="text-white/30 text-xs font-boogaloo mb-5">Laatste 14 dagen</p>
+      <p className="text-white/30 text-xs font-boogaloo mb-5">{t.statsLast14}</p>
 
       {/* Chart area */}
       <div className="flex items-end gap-1.5 h-32 relative">
@@ -77,8 +74,8 @@ function DailyChart({ days }: { days: DayBucket[] }) {
                 className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs font-boogaloo whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10"
                 style={{ background: "#1C1C1C", border: "1px solid rgba(255,204,0,0.3)", color: "#FFCC00" }}
               >
-                {formatDateLabel(d.date)}: {d.score > 0 ? `+${d.score}` : d.score}
-                {d.total > 0 && <span className="text-white/40"> ({d.total} stemmen)</span>}
+                {formatDateLabel(d.date, t.monthsShort as string[])}: {d.score > 0 ? `+${d.score}` : d.score}
+                {d.total > 0 && <span className="text-white/40"> ({t.statsVotesSuffix(d.total)})</span>}
               </div>
 
               {/* Positive bar (above center) */}
@@ -125,11 +122,11 @@ function DailyChart({ days }: { days: DayBucket[] }) {
       <div className="flex items-center gap-4 mt-3 text-xs font-boogaloo text-white/40">
         <span className="flex items-center gap-1">
           <span className="w-3 h-3 rounded-sm inline-block" style={{ background: "#22c55e" }} />
-          Meer vertrouwen
+          {t.statsMoreTrust}
         </span>
         <span className="flex items-center gap-1">
           <span className="w-3 h-3 rounded-sm inline-block" style={{ background: "#D40511" }} />
-          Minder vertrouwen
+          {t.statsLessTrust}
         </span>
       </div>
     </div>
@@ -152,6 +149,7 @@ function ScoreBadge({ score }: { score: number }) {
 
 // ─── Monthly Card ─────────────────────────────────────────────────────────────
 function MonthCard({ m, index }: { m: MonthBucket; index: number }) {
+  const { t } = useLang();
   const positivePct = m.total > 0 ? (m.positive / m.total) * 100 : 0;
   const negativePct = m.total > 0 ? (m.negative / m.total) * 100 : 0;
 
@@ -170,7 +168,7 @@ function MonthCard({ m, index }: { m: MonthBucket; index: number }) {
             {m.monthName} {m.year}
           </h4>
           <p className="text-white/35 text-xs font-boogaloo mt-0.5">
-            {m.total} stem{m.total !== 1 ? "men" : ""}
+            {t.statsVotesSuffix(m.total)}
           </p>
         </div>
         <ScoreBadge score={m.score} />
@@ -216,6 +214,7 @@ function MonthCard({ m, index }: { m: MonthBucket; index: number }) {
 
 // ─── Main export ──────────────────────────────────────────────────────────────
 export default function StatsSection() {
+  const { t } = useLang();
   const [daily, setDaily] = useState<DayBucket[]>([]);
   const [monthly, setMonthly] = useState<MonthBucket[]>([]);
   const [loading, setLoading] = useState(true);
@@ -234,7 +233,7 @@ export default function StatsSection() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="font-boogaloo text-white/30 animate-pulse">Statistieken laden...</div>
+        <div className="font-boogaloo text-white/30 animate-pulse">{t.statsLoading}</div>
       </div>
     );
   }
@@ -249,7 +248,7 @@ export default function StatsSection() {
       >
         <div className="text-4xl mb-2">📊</div>
         <p className="text-white/40 font-boogaloo text-lg">
-          Nog geen statistieken — stem als eerste!
+          {t.statsEmpty}
         </p>
       </div>
     );
@@ -261,7 +260,7 @@ export default function StatsSection() {
       <div className="flex items-center gap-3">
         <div className="h-px flex-1" style={{ background: "rgba(255,204,0,0.15)" }} />
         <h2 className="font-fredoka font-bold text-white/60 text-sm uppercase tracking-widest">
-          Statistieken
+          {t.statsTitle}
         </h2>
         <div className="h-px flex-1" style={{ background: "rgba(255,204,0,0.15)" }} />
       </div>
@@ -273,7 +272,7 @@ export default function StatsSection() {
       {monthly.length > 0 && (
         <div>
           <h3 className="font-boogaloo text-lg mb-3" style={{ color: "#FFCC00" }}>
-            🗓️ Per maand
+            {t.statsPerMonth}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {monthly.map((m, i) => (

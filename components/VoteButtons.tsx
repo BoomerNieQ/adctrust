@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 interface VoteButtonsProps {
   isLoggedIn: boolean;
@@ -18,6 +19,7 @@ export default function VoteButtons({
   cooldownMessage,
   onLoginRequest,
 }: VoteButtonsProps) {
+  const { t } = useLang();
   const [voting, setVoting] = useState<1 | -1 | null>(null);
 
   async function handleVote(value: 1 | -1) {
@@ -40,10 +42,10 @@ export default function VoteButtons({
           whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,204,0,0.4)" }}
           whileTap={{ scale: 0.95 }}
         >
-          🔐 Log in om te stemmen
+          🔐 {t.loginButton}
         </motion.button>
         <p className="text-white/40 mt-2 text-sm font-boogaloo">
-          Alleen voor @dhl.com medewerkers
+          {t.loginOnly}
         </p>
       </div>
     );
@@ -100,9 +102,9 @@ export default function VoteButtons({
       </div>
 
       <div className="flex gap-4 text-sm font-boogaloo">
-        <span className="text-green-400">+1 Vertrouwen</span>
+        <span className="text-green-400">{t.votePositive}</span>
         <span className="text-white/20">|</span>
-        <span style={{ color: "#D40511" }}>-1 Wantrouwen</span>
+        <span style={{ color: "#D40511" }}>{t.voteNegative}</span>
       </div>
 
       <AnimatePresence>

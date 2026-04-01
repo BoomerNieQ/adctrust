@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 export interface VoteActivity {
   firstName: string;
@@ -15,23 +16,20 @@ interface ActivityFeedProps {
   score: number;
 }
 
-function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
+function VoteEntry({ vote, index }: { vote: VoteActivity; index: number }) {
+  const { t } = useLang();
+  const isPos = vote.value > 0;
+
+  const diff = Date.now() - new Date(vote.createdAt).getTime();
   const secs = Math.floor(diff / 1000);
   const mins = Math.floor(diff / 60000);
   const hours = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
-
-  if (secs < 30) return "zojuist";
-  if (mins < 1) return "minder dan een minuut geleden";
-  if (mins < 60) return `${mins} minuut${mins !== 1 ? "en" : ""} geleden`;
-  if (hours < 24) return `${hours} uur geleden`;
-  return `${days} dag${days !== 1 ? "en" : ""} geleden`;
-}
-
-function VoteEntry({ vote, index }: { vote: VoteActivity; index: number }) {
-  const isPos = vote.value > 0;
-  const timeStr = timeAgo(vote.createdAt);
+  const timeStr =
+    secs < 30 ? t.activityJustNow :
+    mins < 60 ? t.activityMinAgo(mins) :
+    hours < 24 ? t.activityHourAgo(hours) :
+    t.activityDayAgo(days);
 
   return (
     <motion.div
@@ -53,9 +51,9 @@ function VoteEntry({ vote, index }: { vote: VoteActivity; index: number }) {
           <span className="text-white font-bold">{vote.firstName}</span>
           {" had "}
           <span style={{ color: isPos ? "#4ade80" : "#D40511", fontWeight: "bold" }}>
-            {isPos ? "meer" : "minder"}
+            {isPos ? t.activityMore : t.activityLess}
           </span>
-          {" vertrouwen in "}
+          {" "}{t.activityIn}{" "}
           <span style={{ color: "#FFCC00" }}>Dominique</span>
         </p>
         <p className="text-white/30 text-xs mt-0.5">{timeStr}</p>
@@ -103,16 +101,17 @@ function ScoreBar({ score }: { score: number }) {
 }
 
 export default function ActivityFeed({ votes, totalCount, score }: ActivityFeedProps) {
+  const { t } = useLang();
   return (
     <div
       className="rounded-2xl p-5 h-fit sticky top-6"
       style={{ background: "#242424", border: "1px solid rgba(255,204,0,0.15)" }}
     >
       <h3 className="font-boogaloo text-lg mb-1" style={{ color: "#FFCC00" }}>
-        📊 Live activiteit
+        {t.activityTitle}
       </h3>
       <p className="text-white/30 text-xs font-boogaloo mb-4">
-        {totalCount} stemmen in totaal
+        {t.activityTotal(totalCount)}
       </p>
 
       <ScoreBar score={score} />
@@ -121,7 +120,7 @@ export default function ActivityFeed({ votes, totalCount, score }: ActivityFeedP
         <AnimatePresence>
           {votes.length === 0 ? (
             <p className="text-white/30 text-sm font-boogaloo text-center py-6">
-              Nog geen stemmen. Wees de eerste!
+              {t.activityEmpty}
             </p>
           ) : (
             votes.map((v, i) => (
@@ -133,7 +132,7 @@ export default function ActivityFeed({ votes, totalCount, score }: ActivityFeedP
 
       {votes.length > 0 && (
         <p className="text-white/20 text-xs text-center mt-3 font-boogaloo">
-          Ververst elke 5 seconden
+          {t.activityRefresh}
         </p>
       )}
     </div>

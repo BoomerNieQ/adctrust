@@ -12,6 +12,7 @@ import WelcomeModal from "./WelcomeModal";
 import LoginModal from "./LoginModal";
 import { getRandomMeme, type Meme } from "@/lib/memes";
 import { calculateScore } from "@/lib/score";
+import { useLang } from "@/lib/i18n";
 import RandomMemeButton from "./RandomMemeButton";
 import RosineMemes from "./RosineMemes";
 import DominiqueMeme from "./DominiqueMeme";
@@ -35,6 +36,7 @@ interface VertrouwensBarometerProps {
 }
 
 function BalanceEasterEgg({ show }: { show: boolean }) {
+  const { t } = useLang();
   return (
     <AnimatePresence>
       {show && (
@@ -64,10 +66,10 @@ function BalanceEasterEgg({ show }: { show: boolean }) {
             transition={{ delay: 0.3 }}
           >
             <p className="text-3xl font-boogaloo" style={{ color: "#FFCC00" }}>
-              ⚖️ Precies in balans!
+              {t.balanceTitle}
             </p>
             <p className="text-white/60 font-boogaloo text-sm mt-1">
-              50/50 — Dominique kan nog alle kanten op
+              {t.balanceSubtitle}
             </p>
           </motion.div>
         </motion.div>
@@ -89,28 +91,30 @@ function CrackVignette({ score }: { score: number }) {
   );
 }
 
-function getStatusLabel(score: number): string {
-  if (score > 75)  return "🏆 Dominique is de beste Team Manager!";
-  if (score > 50)  return "😊 Overwegend vertrouwen in Dominique!";
-  if (score > 25)  return "🤔 Positief, maar het kan altijd beter, Dom";
-  if (score > 0)   return "😐 Twijfelachtig — net boven nul";
-  if (score === 0) return "⚖️ Precies in balans!";
-  if (score > -25) return "😕 Lichtelijk wantrouwig...";
-  if (score > -50) return "😠 Het vertrouwen daalt";
-  if (score > -75) return "💀 Pakket vermist — net als het vertrouwen";
-  return "🚨 CRISIS! Dominique heeft wat uit te leggen!";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getStatusLabel(score: number, t: any): string {
+  if (score > 75)  return t.statusVeryHigh;
+  if (score > 50)  return t.statusHigh;
+  if (score > 25)  return t.statusModerate;
+  if (score > 0)   return t.statusSlightlyPositive;
+  if (score === 0) return t.statusNeutral;
+  if (score > -25) return t.statusSlightlyNegative;
+  if (score > -50) return t.statusNegative;
+  if (score > -75) return t.statusVeryNegative;
+  return t.statusCrisis;
 }
 
 function ResetButton() {
+  const { t } = useLang();
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
   const reset = async () => {
-    if (!confirm("Alle stemmen verwijderen? Dit kan niet ongedaan worden gemaakt.")) return;
+    if (!confirm(t.resetConfirm)) return;
     setBusy(true);
     const res = await fetch("/api/admin/reset", { method: "POST" });
     const data = await res.json();
-    setMsg(res.ok ? "Reset geslaagd!" : (data.error ?? "Fout"));
+    setMsg(res.ok ? t.resetSuccess : (data.error ?? t.resetError));
     setBusy(false);
     setTimeout(() => setMsg(""), 4000);
   };
@@ -125,14 +129,15 @@ function ResetButton() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {busy ? "Bezig..." : "🗑️ Reset alle stemmen"}
+        {busy ? `${t.loginLoading}` : t.resetBtn}
       </motion.button>
-      {msg && <p className="text-xs font-boogaloo" style={{ color: msg.includes("geslaagd") ? "#22c55e" : "#D40511" }}>{msg}</p>}
+      {msg && <p className="text-xs font-boogaloo" style={{ color: msg === t.resetSuccess ? "#22c55e" : "#D40511" }}>{msg}</p>}
     </div>
   );
 }
 
 export default function VertrouwensBarometer({ initialData }: VertrouwensBarometerProps) {
+  const { t } = useLang();
   const { data: session, status } = useSession();
   const [data, setData] = useState<ScoreData>(initialData);
   const [displayScore, setDisplayScore] = useState(initialData.score);
@@ -346,7 +351,7 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}
             >
-              {getStatusLabel(displayScore)}
+              {getStatusLabel(displayScore, t)}
             </motion.p>
           </AnimatePresence>
 

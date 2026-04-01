@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { MEDIA } from "@/lib/memes";
+import { useLang } from "@/lib/i18n";
 
 interface WelcomeModalProps {
   firstName: string;
@@ -11,6 +12,7 @@ interface WelcomeModalProps {
 }
 
 export default function WelcomeModal({ firstName, isReturning, onClose }: WelcomeModalProps) {
+  const { t } = useLang();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoError, setVideoError] = useState(false);
 
@@ -42,7 +44,7 @@ export default function WelcomeModal({ firstName, isReturning, onClose }: Welcom
         <div className="px-6 pt-5 pb-2">
           <div className="text-4xl mb-2">{isReturning ? "👋" : "🎉"}</div>
           <h2 className="text-3xl font-boogaloo font-bold" style={{ color: "#FFCC00" }}>
-            {isReturning ? `Welkom terug,` : `Welkom,`}
+            {isReturning ? t.welcomeBack : t.welcomeNew}
           </h2>
           <p className="text-4xl font-fredoka font-bold text-white mt-1">{firstName}!</p>
         </div>
@@ -69,9 +71,7 @@ export default function WelcomeModal({ firstName, isReturning, onClose }: Welcom
 
         <div className="px-6 py-4">
           <p className="text-white/50 font-boogaloo text-sm mb-4">
-            {isReturning
-              ? `Fijn dat je er weer bij bent! Jouw stem telt.`
-              : `Leuk dat je erbij bent! Stem mee over Dominique.`}
+            {isReturning ? t.welcomeReturningMsg : t.welcomeNewMsg}
           </p>
 
           <motion.button
@@ -81,7 +81,7 @@ export default function WelcomeModal({ firstName, isReturning, onClose }: Welcom
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            Naar de barometer! 🌡️
+            {t.welcomeClose}
           </motion.button>
         </div>
       </motion.div>

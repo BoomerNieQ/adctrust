@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 interface LoginModalProps {
   onClose: () => void;
 }
 
 export default function LoginModal({ onClose }: LoginModalProps) {
+  const { t } = useLang();
   const [email,   setEmail]   = useState("");
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState("");
@@ -23,13 +25,13 @@ export default function LoginModal({ onClose }: LoginModalProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!isValid) { setError("Gebruik je DHL e-mailadres: voornaam.achternaam@dhl.com"); return; }
+    if (!isValid) { setError(t.loginError); return; }
     setLoading(true);
     setError("");
     const result = await signIn("dhl-email", { email: email.trim().toLowerCase(), redirect: false });
     setLoading(false);
     if (result?.error) {
-      setError("Ongeldig e-mailadres. Gebruik voornaam.achternaam@dhl.com");
+      setError(t.loginError);
     } else {
       onClose();
       window.location.reload();
@@ -56,18 +58,18 @@ export default function LoginModal({ onClose }: LoginModalProps) {
             <div className="inline-flex items-center gap-2 bg-dhl-yellow px-5 py-2 rounded-lg mb-3">
               <span className="text-dhl-dark font-fredoka text-2xl font-bold tracking-wider">DHL</span>
             </div>
-            <h2 className="text-xl text-white font-boogaloo">Inloggen</h2>
-            <p className="text-white/40 text-sm mt-1 font-boogaloo">ADC · Vertrouwensbarometer</p>
+            <h2 className="text-xl text-white font-boogaloo">{t.loginTitle}</h2>
+            <p className="text-white/40 text-sm mt-1 font-boogaloo">{t.headerSub}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-white/60 text-sm font-boogaloo mb-1.5">E-mailadres</label>
+              <label className="block text-white/60 text-sm font-boogaloo mb-1.5">{t.loginEmailLabel}</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                placeholder="voornaam.achternaam@dhl.com"
+                placeholder={t.loginEmailPlaceholder}
                 className="w-full px-4 py-3 rounded-xl text-white font-boogaloo text-lg outline-none transition-all"
                 style={{
                   background: "#1C1C1C",
@@ -79,7 +81,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
                 {previewName && (
                   <motion.p className="text-sm mt-2 font-boogaloo" style={{ color: "#FFCC00" }}
                     initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                    👋 Hoi {previewName}!
+                    {t.loginHi} {previewName}!
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -97,12 +99,12 @@ export default function LoginModal({ onClose }: LoginModalProps) {
               className="w-full py-3 rounded-xl font-boogaloo text-lg font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               style={{ background: isValid ? "#FFCC00" : "rgba(255,204,0,0.3)", color: "#1C1C1C" }}
               whileHover={isValid ? { scale: 1.02 } : {}} whileTap={isValid ? { scale: 0.98 } : {}}>
-              {loading ? "⏳ Inloggen..." : "→ Inloggen"}
+              {loading ? `⏳ ${t.loginLoading}` : `→ ${t.loginSubmit}`}
             </motion.button>
 
             <button type="button" onClick={onClose}
               className="w-full py-2 text-white/30 hover:text-white/60 font-boogaloo text-sm transition-colors">
-              Annuleren
+              {t.loginCancel}
             </button>
           </form>
         </div>

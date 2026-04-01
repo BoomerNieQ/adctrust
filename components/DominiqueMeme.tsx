@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DOMINIQUE_MEME } from "@/lib/memes";
+import { useLang } from "@/lib/i18n";
 
 export default function DominiqueMeme() {
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -28,7 +30,7 @@ export default function DominiqueMeme() {
         whileHover={{ scale: 1.05, background: "rgba(255,204,0,0.16)" }}
         whileTap={{ scale: 0.95 }}
       >
-        🤔 Wat zou Dominique nu denken?
+        {t.btnDominiqueMeme}
       </motion.button>
 
       <AnimatePresence>
@@ -63,10 +65,10 @@ export default function DominiqueMeme() {
               </div>
               <div className="px-5 py-3 text-center">
                 <p className="font-boogaloo text-xs uppercase tracking-widest mb-1" style={{ color: "rgba(255,204,0,0.5)" }}>
-                  Dominique&apos;s gedachten
+                  {t.dominiqueMemeTitle}
                 </p>
                 <p className="font-boogaloo text-lg" style={{ color: "#FFCC00" }}>{DOMINIQUE_MEME.label}</p>
-                <p className="text-white/25 text-xs mt-1">Klik om te sluiten</p>
+                <p className="text-white/25 text-xs mt-1">{t.clickToClose}</p>
               </div>
             </motion.div>
           </motion.div>

@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import type { Meme } from "@/lib/memes";
+import { useLang } from "@/lib/i18n";
 
 interface MemeOverlayProps {
   meme: Meme | null;
@@ -38,6 +39,7 @@ function Confetti() {
 }
 
 export default function MemeOverlay({ meme, onClose }: MemeOverlayProps) {
+  const { t } = useLang();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mediaError, setMediaError] = useState(false);
 
@@ -112,7 +114,7 @@ export default function MemeOverlay({ meme, onClose }: MemeOverlayProps) {
                 {meme.subtext && (
                   <p className="text-white/60 text-sm mt-1 font-boogaloo">{meme.subtext}</p>
                 )}
-                <p className="text-white/25 text-xs mt-3">Klik om te sluiten</p>
+                <p className="text-white/25 text-xs mt-3">{t.clickToClose}</p>
               </div>
             </motion.div>
           </motion.div>

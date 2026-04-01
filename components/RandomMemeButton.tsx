@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RANDOM_MEMES } from "@/lib/memes";
+import { useLang } from "@/lib/i18n";
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -14,6 +15,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export default function RandomMemeButton() {
+  const { t } = useLang();
   const [active, setActive] = useState<{ file: string; label: string } | null>(null);
   const [isPortrait, setIsPortrait] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -48,7 +50,7 @@ export default function RandomMemeButton() {
         whileHover={{ scale: 1.05, background: "rgba(255,204,0,0.22)" }}
         whileTap={{ scale: 0.95 }}
       >
-        🎲 Random Memes
+        {t.btnRandomMemes}
       </motion.button>
 
       <AnimatePresence>
@@ -91,7 +93,7 @@ export default function RandomMemeButton() {
               </div>
               <div className="px-5 py-3 text-center">
                 <p className="font-boogaloo text-lg" style={{ color: "#FFCC00" }}>{active.label}</p>
-                <p className="text-white/25 text-xs mt-1">Klik om te sluiten</p>
+                <p className="text-white/25 text-xs mt-1">{t.clickToClose}</p>
               </div>
             </motion.div>
           </motion.div>

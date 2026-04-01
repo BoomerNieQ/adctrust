@@ -68,7 +68,7 @@ export function WeeklyMemesModal({ onClose }: { onClose: () => void }) {
         <div className="h-1.5 w-full" style={{ background: "linear-gradient(to right, #D40511 50%, #FFCC00 50%)" }} />
 
         <div className="px-5 pt-4 pb-2">
-          <p className="text-white/30 text-xs font-boogaloo uppercase tracking-widest mb-0.5">🥚 Easter egg gevonden!</p>
+          <p className="text-white/30 text-xs font-boogaloo uppercase tracking-widest mb-0.5">{t.weeklyEasterEgg}</p>
           <h2 className="font-boogaloo text-xl" style={{ color: "#FFCC00" }}>{t.weeklyTitle}</h2>
           <p className="text-white/35 text-xs font-boogaloo">{t.weeklySubtitle}</p>
         </div>
@@ -104,7 +104,7 @@ export function WeeklyMemesModal({ onClose }: { onClose: () => void }) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Volgende →
+              {t.weeklyNext}
             </motion.button>
           )}
         </div>
