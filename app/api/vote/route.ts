@@ -6,7 +6,8 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calculateScore } from "@/lib/score";
 
-const RATE_LIMIT_MINUTES = 10;
+const RATE_LIMIT_SECONDS = 30;
+const RATE_LIMIT_MINUTES = RATE_LIMIT_SECONDS / 60;
 
 export async function GET() {
   const [votes, positiveCount, negativeCount] = await Promise.all([
@@ -60,9 +61,9 @@ export async function POST(req: NextRequest) {
   if (recentVote) {
     const nextAllowed = new Date(recentVote.createdAt.getTime() + RATE_LIMIT_MINUTES * 60 * 1000);
     const waitMs = nextAllowed.getTime() - Date.now();
-    const waitMins = Math.ceil(waitMs / 60000);
+    const waitSecs = Math.ceil(waitMs / 1000);
     return NextResponse.json(
-      { error: `Te snel! Wacht nog ${waitMins} minuut${waitMins !== 1 ? "en" : ""}.` },
+      { error: `Te snel! Wacht nog ${waitSecs} seconde${waitSecs !== 1 ? "n" : ""}.` },
       { status: 429 }
     );
   }
