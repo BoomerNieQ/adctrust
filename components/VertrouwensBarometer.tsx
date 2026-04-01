@@ -91,6 +91,26 @@ function CrackVignette({ score }: { score: number }) {
   );
 }
 
+function SusToast({ show }: { show: boolean }) {
+  const { t } = useLang();
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl shadow-2xl"
+          style={{ background: "#1C1C1C", border: "2px solid rgba(255,204,0,0.5)" }}
+          initial={{ opacity: 0, y: -24, scale: 0.85 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -24, scale: 0.85 }}
+        >
+          <p className="font-boogaloo text-xl text-center" style={{ color: "#FFCC00" }}>{t.susTitle}</p>
+          <p className="font-boogaloo text-xs text-center text-white/50 mt-0.5">{t.susSubtitle}</p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getStatusLabel(score: number, t: any): string {
   if (score > 75)  return t.statusVeryHigh;
@@ -146,6 +166,8 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
   const [cooldownMessage, setCooldownMessage] = useState("");
   const [showBalance, setShowBalance] = useState(false);
   const [redFlash, setRedFlash] = useState(false);
+  const [showSus, setShowSus] = useState(false);
+  const consecutivePositiveRef = useRef(0);
   const [showLogin, setShowLogin] = useState(false);
   const [welcomeData, setWelcomeData] = useState<{ firstName: string; isReturning: boolean } | null>(null);
   const [birthdayNames, setBirthdayNames] = useState<string[] | null>(null);
@@ -210,6 +232,13 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
     if (value === -1) {
       setRedFlash(true);
       setTimeout(() => setRedFlash(false), 600);
+      consecutivePositiveRef.current = 0;
+    } else {
+      consecutivePositiveRef.current += 1;
+      if (consecutivePositiveRef.current >= 3) {
+        setShowSus(true);
+        setTimeout(() => setShowSus(false), 3500);
+      }
     }
 
     try {
@@ -256,6 +285,7 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
   return (
     <>
       {/* Overlays */}
+      <SusToast show={showSus} />
       {redFlash && (
         <div
           className="fixed inset-0 pointer-events-none z-20 red-flash"

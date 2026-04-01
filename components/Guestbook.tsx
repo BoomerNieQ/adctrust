@@ -5,11 +5,15 @@ import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/lib/i18n";
 
+const REACTION_EMOJIS = ["👍", "❤️", "😂"];
+
 interface Entry {
   id: string;
   message: string;
   createdAt: string;
   user: { firstName: string; lastName: string };
+  reactions: Record<string, number>;
+  myReactions: string[];
 }
 
 export default function Guestbook() {
@@ -48,6 +52,32 @@ export default function Guestbook() {
       setError(data.error ?? "Er ging iets mis");
     }
     setSending(false);
+  }
+
+  async function toggleReaction(entryId: string, emoji: string) {
+    if (!session) return;
+    // Optimistic update
+    setEntries((prev) =>
+      prev.map((e) => {
+        if (e.id !== entryId) return e;
+        const alreadyReacted = e.myReactions.includes(emoji);
+        return {
+          ...e,
+          reactions: {
+            ...e.reactions,
+            [emoji]: (e.reactions[emoji] ?? 0) + (alreadyReacted ? -1 : 1),
+          },
+          myReactions: alreadyReacted
+            ? e.myReactions.filter((r) => r !== emoji)
+            : [...e.myReactions, emoji],
+        };
+      })
+    );
+    await fetch(`/api/guestbook/${entryId}/react`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ emoji }),
+    });
   }
 
   function formatDate(iso: string) {
@@ -172,7 +202,34 @@ export default function Guestbook() {
                       </span>
                       <span className="text-white/30 text-xs font-boogaloo">{formatDate(entry.createdAt)}</span>
                     </div>
-                    <p className="text-white/80 text-sm font-boogaloo leading-relaxed">{entry.message}</p>
+                    <p className="text-white/80 text-sm font-boogaloo leading-relaxed mb-3">{entry.message}</p>
+
+                    {/* Reactions */}
+                    <div className="flex items-center gap-1.5">
+                      {REACTION_EMOJIS.map((emoji) => {
+                        const count = entry.reactions[emoji] ?? 0;
+                        const reacted = entry.myReactions.includes(emoji);
+                        return (
+                          <motion.button
+                            key={emoji}
+                            onClick={() => toggleReaction(entry.id, emoji)}
+                            disabled={!session}
+                            className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-boogaloo transition-all"
+                            style={{
+                              background: reacted ? "rgba(255,204,0,0.18)" : "rgba(255,255,255,0.05)",
+                              border: `1px solid ${reacted ? "rgba(255,204,0,0.45)" : "rgba(255,255,255,0.1)"}`,
+                              color: reacted ? "#FFCC00" : "rgba(255,255,255,0.4)",
+                              cursor: session ? "pointer" : "default",
+                            }}
+                            whileHover={session ? { scale: 1.1 } : {}}
+                            whileTap={session ? { scale: 0.9 } : {}}
+                          >
+                            <span>{emoji}</span>
+                            {count > 0 && <span>{count}</span>}
+                          </motion.button>
+                        );
+                      })}
+                    </div>
                   </motion.div>
                 ))}
               </div>

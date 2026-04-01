@@ -168,6 +168,14 @@ export const translations = {
     statsLessTrust: "Minder vertrouwen",
     statsVotesSuffix: (n: number) => `${n} stem${n !== 1 ? "men" : ""}`,
 
+    // Sus easter egg
+    susTitle: "🤨 Sus...",
+    susSubtitle: "Iemand stemt een beetje té enthousiast",
+
+    // Dick easter egg
+    dickLabel: "🔒 Streng vertrouwelijk",
+    dickClose: "Sluiten",
+
     // Rosine
     rosineClose: "Klik om te sluiten · Knop opnieuw voor de volgende tip",
 
@@ -326,6 +334,14 @@ export const translations = {
     statsMoreTrust: "Plus de confiance",
     statsLessTrust: "Moins de confiance",
     statsVotesSuffix: (n: number) => `${n} vote${n !== 1 ? "s" : ""}`,
+
+    // Sus easter egg
+    susTitle: "🤨 Suspect...",
+    susSubtitle: "Quelqu'un vote avec un peu trop d'enthousiasme",
+
+    // Dick easter egg
+    dickLabel: "🔒 Strictement confidentiel",
+    dickClose: "Fermer",
 
     // Rosine
     rosineClose: "Cliquez pour fermer · Rebouton pour le conseil suivant",

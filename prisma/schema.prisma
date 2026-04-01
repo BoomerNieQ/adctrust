@@ -15,9 +15,10 @@ model User {
   isAdmin   Boolean  @default(false)
   createdAt DateTime @default(now())
   lastLogin DateTime @default(now())
-  votes            Vote[]
-  guestbookEntries GuestbookEntry[]
-  birthday         Birthday?
+  votes               Vote[]
+  guestbookEntries    GuestbookEntry[]
+  guestbookReactions  GuestbookReaction[]
+  birthday            Birthday?
 }
 
 model Vote {
@@ -29,11 +30,24 @@ model Vote {
 }
 
 model GuestbookEntry {
-  id        String   @id @default(cuid())
+  id        String               @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User                 @relation(fields: [userId], references: [id])
   message   String
-  createdAt DateTime @default(now())
+  createdAt DateTime             @default(now())
+  reactions GuestbookReaction[]
+}
+
+model GuestbookReaction {
+  id        String         @id @default(cuid())
+  entryId   String
+  entry     GuestbookEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  emoji     String
+  createdAt DateTime       @default(now())
+
+  @@unique([entryId, userId, emoji])
 }
 
 model Birthday {
