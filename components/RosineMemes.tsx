@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ROSINE_MEMES } from "@/lib/memes";
+import { useLang } from "@/lib/i18n";
 
 // Random fixed position, computed once on mount (avoids SSR mismatch)
 function useRandomPosition() {
@@ -24,6 +25,7 @@ function useRandomPosition() {
 }
 
 export default function RosineMemes() {
+  const { t } = useLang();
   const [modalOpen, setModalOpen] = useState(false);
   // index tracks which meme to show next; persists across open/close
   const [index, setIndex] = useState(0);
@@ -71,7 +73,7 @@ export default function RosineMemes() {
             whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
             whileTap={{ scale: 0.93 }}
           >
-            💅 Rosine&apos;s life advise
+            {t.btnRosine}
           </motion.button>
         </div>
       ) : (
@@ -120,11 +122,11 @@ export default function RosineMemes() {
               </div>
               <div className="px-5 py-3 text-center">
                 <p className="font-boogaloo text-xs uppercase tracking-widest mb-1" style={{ color: "rgba(212,5,17,0.7)" }}>
-                  Rosine&apos;s life advise
+                  {t.btnRosine}
                 </p>
                 <p className="font-boogaloo text-lg" style={{ color: "#FFCC00" }}>{active.label}</p>
                 <p className="text-white/25 text-xs mt-1">
-                  Klik om te sluiten · Knop opnieuw voor de volgende tip ({index + 1}/{ROSINE_MEMES.length})
+                  {t.rosineClose} ({index + 1}/{ROSINE_MEMES.length})
                 </p>
               </div>
             </motion.div>

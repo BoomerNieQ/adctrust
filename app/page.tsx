@@ -11,7 +11,10 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 import PinkFence from "@/components/PinkFence";
 import RosineMemes from "@/components/RosineMemes";
 import BirthdayBanner from "@/components/BirthdayBanner";
-import { TAGLINES } from "@/lib/memes";
+import BirthdayWidget from "@/components/BirthdayWidget";
+import TitleSection from "@/components/TitleSection";
+import PageFooter from "@/components/PageFooter";
+import PageHeaderText from "@/components/PageHeaderText";
 
 async function getInitialData() {
   try {
@@ -45,13 +48,12 @@ async function getInitialData() {
 
 export default async function Home() {
   const initialData = await getInitialData();
-  const tagline = TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
 
   return (
     <div className="relative min-h-screen overflow-hidden" style={{ background: "#1C1C1C" }}>
       <WindmillBackground />
 
-      {/* DHL top stripe */}
+      {/* top stripe */}
       <div
         className="relative z-10 h-2 w-full"
         style={{ background: "linear-gradient(to right, #D40511 50%, #FFCC00 50%)" }}
@@ -60,9 +62,7 @@ export default async function Home() {
       {/* Header */}
       <header className="relative z-30 flex items-center justify-between px-5 sm:px-8 py-3 max-w-[1400px] mx-auto">
         <div className="flex items-center gap-3">
-          <span className="text-white/40 font-boogaloo hidden sm:block text-sm">
-            Vertrouwensbarometer
-          </span>
+          <PageHeaderText />
         </div>
         <div className="flex items-center gap-2">
           <LanguageToggle />
@@ -70,36 +70,7 @@ export default async function Home() {
         </div>
       </header>
 
-      {/* Title section */}
-      <div className="relative z-10 text-center px-4 py-4 pb-6">
-        <h1 className="text-5xl sm:text-6xl font-boogaloo text-white leading-tight">
-          Vertrouwen in{" "}
-          <span
-            className="font-fredoka"
-            style={{
-              background: "linear-gradient(135deg, #FFCC00, #D40511)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Dominique
-          </span>
-        </h1>
-        <p className="text-white/35 font-boogaloo mt-1 text-sm">
-          Team Manager
-        </p>
-        <p
-          className="mt-3 font-boogaloo text-base px-5 py-2 rounded-full inline-block"
-          style={{
-            color: "rgba(255,204,0,0.75)",
-            background: "rgba(255,204,0,0.07)",
-            border: "1px solid rgba(255,204,0,0.18)",
-          }}
-        >
-          "{tagline}"
-        </p>
-      </div>
+      <TitleSection />
 
       <BirthdayBanner />
 
@@ -107,6 +78,11 @@ export default async function Home() {
       <main className="relative z-10 px-4 sm:px-6 pb-16 max-w-[1400px] mx-auto">
         <VertrouwensBarometer initialData={initialData} />
       </main>
+
+      {/* Birthday widget */}
+      <section className="relative z-10 px-4 sm:px-6 pb-8 max-w-[1400px] mx-auto">
+        <BirthdayWidget />
+      </section>
 
       {/* Stats section — full width below barometer */}
       <section className="relative z-10 px-4 sm:px-6 pb-16 max-w-[1400px] mx-auto">
@@ -118,9 +94,7 @@ export default async function Home() {
         <PinkFence className="w-full h-full" />
       </div>
 
-      <p className="relative z-10 text-white/15 text-xs text-center font-boogaloo pb-10">
-        Stem elke 30 seconden · Alleen voor medewerkers
-      </p>
+      <PageFooter />
 
       <BackgroundMusic />
       <RosineMemes />

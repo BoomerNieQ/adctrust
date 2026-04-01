@@ -9,6 +9,11 @@ const MONTHS_NL = [
   "Juli", "Augustus", "September", "Oktober", "November", "December",
 ];
 
+const MONTHS_FR = [
+  "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+  "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre",
+];
+
 interface DayBucket {
   date: string;       // YYYY-MM-DD
   score: number;      // net votes this day
@@ -20,6 +25,7 @@ interface DayBucket {
 interface MonthBucket {
   month: string;      // YYYY-MM
   monthName: string;
+  monthNameFr: string;
   year: number;
   score: number;
   positive: number;
@@ -28,6 +34,7 @@ interface MonthBucket {
   bestDay: string | null;   // YYYY-MM-DD with highest net day
   worstDay: string | null;  // YYYY-MM-DD with lowest net day
   comment: string;
+  commentFr: string;
   emoji: string;
 }
 
@@ -81,6 +88,37 @@ function getMonthComment(
     return { comment: `${monthName} was een slechte maand voor het vertrouwen`, emoji: "💀" };
   }
   return { comment: `${monthName} was een rampmaand — Dominique heeft wat uit te leggen!`, emoji: "🚨" };
+}
+
+function getMonthCommentFr(
+  monthName: string,
+  score: number,
+  total: number,
+  bestDay: string | null,
+  worstDay: string | null
+): string {
+  if (total === 0) return `Pas encore de votes en ${monthName}`;
+  if (score > 60) return `${monthName} était un mois exceptionnel pour Dominique !`;
+  if (score > 30) {
+    if (bestDay) {
+      const d = new Date(bestDay + "T12:00:00Z");
+      return `Le ${d.getUTCDate()} ${monthName.toLowerCase()}, la confiance en Dominique était à son maximum`;
+    }
+    return `${monthName} était un bon mois pour la confiance`;
+  }
+  if (score > 10) return `${monthName} était légèrement positif — Dominique ne peut pas se plaindre`;
+  if (score > 0) return `${monthName} était incertain mais juste positif`;
+  if (score === 0) return `${monthName} était parfaitement équilibré — indécis !`;
+  if (score > -10) return `${monthName} était incertain mais juste négatif`;
+  if (score > -30) return `${monthName} n'était pas un bon mois pour Dominique`;
+  if (score > -60) {
+    if (worstDay) {
+      const d = new Date(worstDay + "T12:00:00Z");
+      return `Le ${d.getUTCDate()} ${monthName.toLowerCase()}, la méfiance envers Dominique était à son comble`;
+    }
+    return `${monthName} était un mauvais mois pour la confiance`;
+  }
+  return `${monthName} était catastrophique — Dominique a des comptes à rendre !`;
 }
 
 export async function GET() {
@@ -143,6 +181,7 @@ export async function GET() {
       const year = parseInt(yearStr);
       const monthIdx = parseInt(monthIdxStr) - 1;
       const monthName = MONTHS_NL[monthIdx];
+      const monthNameFr = MONTHS_FR[monthIdx];
 
       // Find best and worst day
       let bestDay: string | null = null;
@@ -162,10 +201,12 @@ export async function GET() {
       if (worstScore >= 0) worstDay = null;
 
       const { comment, emoji } = getMonthComment(monthName, data.score, data.total, bestDay, worstDay);
+      const commentFr = getMonthCommentFr(monthNameFr, data.score, data.total, bestDay, worstDay);
 
       return {
         month: monthKey,
         monthName,
+        monthNameFr,
         year,
         score: data.score,
         positive: data.positive,
@@ -174,6 +215,7 @@ export async function GET() {
         bestDay,
         worstDay,
         comment,
+        commentFr,
         emoji,
       };
     });

@@ -49,7 +49,7 @@ function VoteEntry({ vote, index }: { vote: VoteActivity; index: number }) {
       <div className="flex-1 min-w-0">
         <p className="text-white/80 text-sm font-boogaloo leading-snug">
           <span className="text-white font-bold">{vote.firstName}</span>
-          {" had "}
+          {" "}{t.activityHad}{" "}
           <span style={{ color: isPos ? "#4ade80" : "#D40511", fontWeight: "bold" }}>
             {isPos ? t.activityMore : t.activityLess}
           </span>

@@ -138,6 +138,7 @@ export const translations = {
     activityTotal: (n: number) => `${n} ${n === 1 ? "stem" : "stemmen"} in totaal`,
     activityEmpty: "Nog geen stemmen. Wees de eerste!",
     activityRefresh: "Ververst elke 5 seconden",
+    activityHad: "had",
     activityMore: "meer",
     activityLess: "minder",
     activityIn: "vertrouwen in",
@@ -166,6 +167,19 @@ export const translations = {
     statsMoreTrust: "Meer vertrouwen",
     statsLessTrust: "Minder vertrouwen",
     statsVotesSuffix: (n: number) => `${n} stem${n !== 1 ? "men" : ""}`,
+
+    // Rosine
+    rosineClose: "Klik om te sluiten · Knop opnieuw voor de volgende tip",
+
+    // Taglines
+    taglines: [
+      "Hoeveel vertrouwen heeft het team in Dominique?",
+      "De eerlijke meting van het team",
+      "Gebaseerd op échte teamopinies",
+      "Team Manager performance indicator — unofficial edition",
+      "Want iemand moet het bijhouden",
+      "Betrouwbaarder dan officiële feedback",
+    ],
 
     // Days / months short
     daysShort: ["zo","ma","di","wo","do","vr","za"],
@@ -285,6 +299,7 @@ export const translations = {
     activityTotal: (n: number) => `${n} vote${n !== 1 ? "s" : ""} au total`,
     activityEmpty: "Pas encore de votes. Soyez le premier !",
     activityRefresh: "Actualisation toutes les 5 secondes",
+    activityHad: "a eu",
     activityMore: "plus de",
     activityLess: "moins de",
     activityIn: "confiance en",
@@ -311,6 +326,19 @@ export const translations = {
     statsMoreTrust: "Plus de confiance",
     statsLessTrust: "Moins de confiance",
     statsVotesSuffix: (n: number) => `${n} vote${n !== 1 ? "s" : ""}`,
+
+    // Rosine
+    rosineClose: "Cliquez pour fermer · Rebouton pour le conseil suivant",
+
+    // Taglines
+    taglines: [
+      "Combien l'équipe fait-elle confiance à Dominique ?",
+      "La mesure honnête de l'équipe",
+      "Basé sur les vraies opinions de l'équipe",
+      "Indicateur de performance Team Manager — édition non officielle",
+      "Parce que quelqu'un doit le suivre",
+      "Plus fiable que les retours officiels",
+    ],
 
     daysShort: ["di","lu","ma","me","je","ve","sa"],
     monthsShort: ["jan","fév","mar","avr","mai","jui","jul","aoû","sep","oct","nov","déc"],

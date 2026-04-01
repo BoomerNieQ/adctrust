@@ -15,6 +15,7 @@ interface DayBucket {
 interface MonthBucket {
   month: string;
   monthName: string;
+  monthNameFr: string;
   year: number;
   score: number;
   positive: number;
@@ -23,6 +24,7 @@ interface MonthBucket {
   bestDay: string | null;
   worstDay: string | null;
   comment: string;
+  commentFr: string;
   emoji: string;
 }
 
@@ -149,7 +151,7 @@ function ScoreBadge({ score }: { score: number }) {
 
 // ─── Monthly Card ─────────────────────────────────────────────────────────────
 function MonthCard({ m, index }: { m: MonthBucket; index: number }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const positivePct = m.total > 0 ? (m.positive / m.total) * 100 : 0;
   const negativePct = m.total > 0 ? (m.negative / m.total) * 100 : 0;
 
@@ -165,7 +167,7 @@ function MonthCard({ m, index }: { m: MonthBucket; index: number }) {
       <div className="flex items-start justify-between gap-3 mb-3">
         <div>
           <h4 className="font-fredoka font-bold text-white text-xl leading-tight">
-            {m.monthName} {m.year}
+            {lang === "fr" ? m.monthNameFr : m.monthName} {m.year}
           </h4>
           <p className="text-white/35 text-xs font-boogaloo mt-0.5">
             {t.statsVotesSuffix(m.total)}
@@ -181,7 +183,7 @@ function MonthCard({ m, index }: { m: MonthBucket; index: number }) {
       >
         <p className="font-boogaloo text-sm leading-snug" style={{ color: "rgba(255,204,0,0.9)" }}>
           <span className="text-base mr-1.5">{m.emoji}</span>
-          {m.comment}
+          {lang === "fr" ? m.commentFr : m.comment}
         </p>
       </div>
 
