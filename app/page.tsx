@@ -15,6 +15,7 @@ import BirthdayWidget from "@/components/BirthdayWidget";
 import TitleSection from "@/components/TitleSection";
 import PageFooter from "@/components/PageFooter";
 import PageHeaderText from "@/components/PageHeaderText";
+import BaconEasterEgg from "@/components/BaconEasterEgg";
 
 async function getInitialData() {
   try {
@@ -98,6 +99,7 @@ export default async function Home() {
 
       <BackgroundMusic />
       <RosineMemes />
+      <BaconEasterEgg />
 
       {/* DHL bottom stripe */}
       <div

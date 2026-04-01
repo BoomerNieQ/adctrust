@@ -58,6 +58,14 @@ const STEPS = [
   { cx: 206, cy: 203, r: 90,  delay: 4.4 },
 ];
 
+// House crests — one per corner
+const CRESTS = [
+  { tx: 8,   ty: 8,   house: "GRYFFINDOR", top: "#7B0D0D", bot: "#B8860B", delay: 1.7, animal: "lion"   },
+  { tx: 732, ty: 8,   house: "RAVENCLAW",  top: "#0C2461", bot: "#7B5800", delay: 1.7, animal: "eagle"  },
+  { tx: 8,   ty: 472, house: "HUFFLEPUFF", top: "#D4A000", bot: "#1a1a1a", delay: 1.8, animal: "badger" },
+  { tx: 732, ty: 472, house: "SLYTHERIN",  top: "#1A4A2A", bot: "#6e6e6e", delay: 1.8, animal: "snake"  },
+];
+
 // Decorative dots for staircases
 const STAIR_DOTS = Array.from({ length: 5 }, (_, i) => ({
   x: 450 + i * 6,
@@ -302,6 +310,77 @@ export default function MaraudersGate({ children }: { children: ReactNode }) {
             <polygon points="740,500 737,508 743,508" fill={INK_MID}/>
             <text x={740} y={496} textAnchor="middle" fontSize="7" className="map-sub">N</text>
           </motion.g>
+
+          {/* ── House Crests ── */}
+          {CRESTS.map((c) => {
+            const ac =
+              c.animal === "lion"   ? "rgba(255,210,0,0.92)"  :
+              c.animal === "eagle"  ? "rgba(190,145,55,0.92)" :
+              c.animal === "badger" ? "#111111"                :
+                                     "rgba(140,220,120,0.95)";
+            return (
+              <motion.g
+                key={c.house}
+                transform={`translate(${c.tx},${c.ty})`}
+                initial={{ opacity: 0 }}
+                animate={showMap ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.9, delay: c.delay }}
+              >
+                {/* Shield fill — top half */}
+                <rect x={0} y={0} width={60} height={38} fill={c.top} opacity={0.88}/>
+                {/* Shield fill — bottom trapezoid */}
+                <path d="M 0,38 L 60,38 L 60,56 L 30,76 L 0,56 Z" fill={c.bot} opacity={0.88}/>
+                {/* Shield outline */}
+                <path d="M 0,0 L 60,0 L 60,56 L 30,76 L 0,56 Z" fill="none" stroke={INK} strokeWidth={1.3}/>
+                <path d="M 3,3 L 57,3 L 57,54 L 30,73 L 3,54 Z" fill="none" stroke="rgba(42,26,14,0.18)" strokeWidth={0.5}/>
+                <line x1={4} y1={38} x2={56} y2={38} stroke="rgba(42,26,14,0.3)" strokeWidth={0.6}/>
+
+                {/* Animal */}
+                {c.animal === "lion" && (
+                  <g>
+                    <circle cx={30} cy={20} r={12} fill="rgba(185,140,0,0.25)" stroke="rgba(255,210,0,0.5)" strokeWidth={1}/>
+                    <circle cx={30} cy={20} r={7.5} fill={ac}/>
+                    <ellipse cx={30} cy={36} rx={8} ry={8} fill={ac}/>
+                    <path d="M 22,29 Q 15,22 13,17" fill="none" stroke={ac} strokeWidth={2.5} strokeLinecap="round"/>
+                    <path d="M 38,34 Q 48,26 46,18 Q 45,14 49,12" fill="none" stroke={ac} strokeWidth={1.5} strokeLinecap="round"/>
+                  </g>
+                )}
+                {c.animal === "eagle" && (
+                  <g fill={ac}>
+                    <path d="M 3,30 Q 15,17 30,26 Q 45,17 57,30 L 52,32 Q 44,21 30,30 Q 16,21 8,32 Z"/>
+                    <ellipse cx={30} cy={39} rx={7} ry={9}/>
+                    <circle cx={30} cy={22} r={5.5}/>
+                    <path d="M 34,23 L 41,25 L 34,27 Z"/>
+                    <path d="M 24,47 L 22,53 M 28,48 L 27,54 M 32,48 L 33,54 M 36,47 L 38,53" fill="none" stroke={ac} strokeWidth={1.4} strokeLinecap="round"/>
+                  </g>
+                )}
+                {c.animal === "badger" && (
+                  <g>
+                    <ellipse cx={30} cy={41} rx={14} ry={9} fill={ac}/>
+                    <ellipse cx={30} cy={25} rx={11} ry={9} fill={ac}/>
+                    <ellipse cx={21} cy={17} rx={4} ry={3.5} fill={ac}/>
+                    <ellipse cx={39} cy={17} rx={4} ry={3.5} fill={ac}/>
+                    <rect x={27.5} y={15} width={5} height={19} rx={2.5} fill="rgba(240,228,170,0.9)"/>
+                    <circle cx={24} cy={23} r={1.5} fill="#FFD700"/>
+                    <circle cx={36} cy={23} r={1.5} fill="#FFD700"/>
+                  </g>
+                )}
+                {c.animal === "snake" && (
+                  <g>
+                    <path d="M 22,53 Q 7,46 12,33 Q 17,21 31,26 Q 45,31 48,18 Q 51,9 43,8" fill="none" stroke={ac} strokeWidth={4} strokeLinecap="round"/>
+                    <ellipse cx={44} cy={9} rx={6} ry={4} fill={ac} transform="rotate(-35,44,9)"/>
+                    <path d="M 49,6 L 55,3 M 49,6 L 55,9" fill="none" stroke="#cc3333" strokeWidth={1} strokeLinecap="round"/>
+                    <circle cx={43} cy={7} r={1.2} fill="#0a1a0a"/>
+                  </g>
+                )}
+
+                {/* House name */}
+                <text x={30} y={84} textAnchor="middle" fontSize="5.5" className="map-label" letterSpacing="1.5" opacity={0.8}>
+                  {c.house}
+                </text>
+              </motion.g>
+            );
+          })}
 
           {/* ── Bottom presentation text ── */}
           <motion.g
