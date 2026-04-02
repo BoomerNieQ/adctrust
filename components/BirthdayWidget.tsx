@@ -73,12 +73,17 @@ export default function BirthdayWidget() {
   const todayD = today.getDate();
   const todayM = today.getMonth() + 1;
 
-  // Sort: today first, then upcoming, then past
-  const sorted = [...entries].sort((a, b) => {
-    const aDays = ((a.month - todayM) * 31 + (a.day - todayD) + 365) % 365;
-    const bDays = ((b.month - todayM) * 31 + (b.day - todayD) + 365) % 365;
-    return aDays - bDays;
-  });
+  function daysUntil(day: number, month: number) {
+    const now = new Date();
+    const year = now.getFullYear();
+    let next = new Date(year, month - 1, day);
+    if (next.setHours(0,0,0,0) < now.setHours(0,0,0,0)) {
+      next = new Date(year + 1, month - 1, day);
+    }
+    return (next.getTime() - new Date().setHours(0,0,0,0)) / 86400000;
+  }
+
+  const sorted = [...entries].sort((a, b) => daysUntil(a.day, a.month) - daysUntil(b.day, b.month));
 
   return (
     <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Attempt = {
@@ -11,7 +11,7 @@ type Attempt = {
   createdAt: string;
 };
 
-export default function DonationWallboard({ refresh }: { refresh: number }) {
+export default function DonationWallboard() {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
 
   const load = useCallback(async () => {
@@ -19,7 +19,15 @@ export default function DonationWallboard({ refresh }: { refresh: number }) {
     if (res.ok) setAttempts(await res.json());
   }, []);
 
-  useEffect(() => { load(); }, [load, refresh]);
+  useEffect(() => {
+    load();
+    // Refresh every 15s to pick up new donations from other users
+    const interval = setInterval(load, 15000);
+    // Also refresh on custom event from DonateButton in same tab
+    const onDonation = () => load();
+    window.addEventListener("donation-made", onDonation);
+    return () => { clearInterval(interval); window.removeEventListener("donation-made", onDonation); };
+  }, [load]);
 
   if (attempts.length === 0) return null;
 

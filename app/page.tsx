@@ -16,7 +16,8 @@ import TitleSection from "@/components/TitleSection";
 import PageFooter from "@/components/PageFooter";
 import PageHeaderText from "@/components/PageHeaderText";
 import BaconEasterEgg from "@/components/BaconEasterEgg";
-import DonateSection from "@/components/DonateSection";
+import DonateButton from "@/components/DonateButton";
+import DonationWallboard from "@/components/DonationWallboard";
 import RingingPhone from "@/components/RingingPhone";
 
 async function getInitialData() {
@@ -97,15 +98,17 @@ export default async function Home() {
         <PinkFence className="w-full h-full" />
       </div>
 
-      <RingingPhone />
-
-      <DonateSection />
+      <section className="relative z-10 px-4 sm:px-6 pb-10 max-w-[1400px] mx-auto">
+        <DonationWallboard />
+      </section>
 
       <PageFooter />
 
       <BackgroundMusic />
       <RosineMemes />
       <BaconEasterEgg />
+      <RingingPhone />
+      <DonateButton floating />
 
       {/* DHL bottom stripe */}
       <div

@@ -15,7 +15,7 @@ const CAUSES = [
 const PAYPAL_BLUE = "#003087";
 const PAYPAL_LIGHT = "#009cde";
 
-export default function DonateButton({ onDonated }: { onDonated: () => void }) {
+export default function DonateButton({ onDonated, floating = false }: { onDonated?: () => void; floating?: boolean }) {
   const { data: session } = useSession();
   const [open, setOpen]           = useState(false);
   const [cause, setCause]         = useState("");
@@ -39,7 +39,8 @@ export default function DonateButton({ onDonated }: { onDonated: () => void }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cause, amount }),
       });
-      onDonated();
+      onDonated?.();
+      window.dispatchEvent(new CustomEvent("donation-made"));
     } catch {
       // still show gotcha even if network fails
     }
@@ -47,7 +48,7 @@ export default function DonateButton({ onDonated }: { onDonated: () => void }) {
     setStep("gotcha");
   }
 
-  return (
+  const btn = (
     <>
       {/* Donate button */}
       <motion.button
@@ -177,6 +178,11 @@ export default function DonateButton({ onDonated }: { onDonated: () => void }) {
       </AnimatePresence>
     </>
   );
+
+  if (floating) {
+    return <div className="fixed left-3 z-40" style={{ top: "55vh" }}>{btn}</div>;
+  }
+  return btn;
 }
 
 function GotchaScreen({ cause, amount, onClose }: { cause: string; amount: string; onClose: () => void }) {
