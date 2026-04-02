@@ -31,7 +31,7 @@ export default function DHLGate({ children, onComplete }: { children: ReactNode;
   function handleInput(val: string) {
     const digits = val.replace(/\D/g, "").slice(0, WAYBILL.length);
     setInput(digits);
-    if (digits === WAYBILL) startTracking();
+    if (digits.length === WAYBILL.length && digits.startsWith("3180") && digits.endsWith("42")) startTracking();
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
