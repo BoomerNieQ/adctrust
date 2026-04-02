@@ -16,7 +16,7 @@ const STEPS = [
   { icon: "✅", label: "Bezorgd!",              time: "Nu"            },
 ];
 
-export default function DHLGate({ children }: { children: ReactNode }) {
+export default function DHLGate({ children, onComplete }: { children: ReactNode; onComplete?: () => void }) {
   const [dismissed, setDismissed]   = useState(false);
   const [tracking,  setTracking]    = useState(false);
   const [step,      setStep]        = useState(-1);
@@ -34,6 +34,7 @@ export default function DHLGate({ children }: { children: ReactNode }) {
     setTimeout(() => setDelivered(true), 4600);
     setTimeout(() => {
       sessionStorage.setItem(STORAGE_KEY, "1");
+      onComplete?.();
       setDismissed(true);
     }, 6200);
   }

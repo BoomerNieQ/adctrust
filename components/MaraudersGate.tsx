@@ -73,7 +73,7 @@ const STAIR_DOTS = Array.from({ length: 5 }, (_, i) => ({
   delay: 0.4 + i * 0.05,
 }));
 
-export default function MaraudersGate({ children }: { children: ReactNode }) {
+export default function MaraudersGate({ children, onComplete }: { children: ReactNode; onComplete?: () => void }) {
   const [phase, setPhase] = useState<Phase>("locked");
   const [typed, setTyped] = useState("");
   const [dismissed, setDismissed] = useState(false);
@@ -124,6 +124,7 @@ export default function MaraudersGate({ children }: { children: ReactNode }) {
 
   function handleMischief() {
     sessionStorage.setItem(STORAGE_KEY, "1");
+    onComplete?.();
     setDismissed(true);
   }
 

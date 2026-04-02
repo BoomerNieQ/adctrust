@@ -139,7 +139,7 @@ function DoorSVG({ side }: { side: "l" | "r" }) {
   );
 }
 
-export default function MoriaGate({ children }: { children: ReactNode }) {
+export default function MoriaGate({ children, onComplete }: { children: ReactNode; onComplete?: () => void }) {
   const [phase, setPhase] = useState<"dark" | "moonlit" | "opening">("dark");
   const [typed, setTyped]   = useState("");
   const [dismissed, setDismissed] = useState(false);
@@ -171,7 +171,7 @@ export default function MoriaGate({ children }: { children: ReactNode }) {
 
   function triggerOpen() {
     setPhase("opening");
-    setTimeout(() => { sessionStorage.setItem(STORAGE_KEY, "1"); setDismissed(true); }, 2900);
+    setTimeout(() => { sessionStorage.setItem(STORAGE_KEY, "1"); onComplete?.(); setDismissed(true); }, 2900);
   }
 
   function onMobileInput(val: string) {
