@@ -39,7 +39,7 @@ export default function LanguageToggle() {
       }
       // Play NL sound
       if (!nlAudioRef.current) {
-        nlAudioRef.current = new Audio("/media/NL flag.m4a");
+        nlAudioRef.current = new Audio("/media/NL%20flag.m4a");
         nlAudioRef.current.volume = 0.7;
       }
       nlAudioRef.current.currentTime = 0;
