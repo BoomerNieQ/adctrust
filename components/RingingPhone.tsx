@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/lib/i18n";
 
-export default function RingingPhone() {
+export default function RingingPhone({ inline = false }: { inline?: boolean }) {
   const { t } = useLang();
   const [answered, setAnswered] = useState(false);
   const [open, setOpen]         = useState(false);
@@ -29,10 +29,10 @@ export default function RingingPhone() {
     setOpen(true);
   }
 
-  if (!hasGutter) return null;
+  if (!inline && !hasGutter) return null;
 
   return (
-    <section className="fixed z-40 flex flex-col items-center" style={{ top: "30vh", left: "calc(50vw + 720px)" }}>
+    <section className={inline ? "flex flex-col items-center" : "fixed z-40 flex flex-col items-center"} style={inline ? {} : { top: "30vh", left: "calc(50vw + 720px)" }}>
       {/* Glow rings */}
       {!answered && (
         <>

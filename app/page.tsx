@@ -97,6 +97,12 @@ export default async function Home() {
         <PinkFence className="w-full h-full" />
       </div>
 
+      {/* Mobile-only: phone + donate inline (floaters hidden on narrow screens) */}
+      <section className="relative z-10 flex flex-col items-center gap-4 pb-8 max-[1799px]:flex min-[1800px]:hidden">
+        <RingingPhone inline />
+        <DonateButton />
+      </section>
+
       <PageFooter />
 
       <BackgroundMusic />
