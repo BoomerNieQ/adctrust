@@ -53,7 +53,7 @@ export default async function Home() {
   const initialData = await getInitialData();
 
   return (
-    <div className="relative min-h-screen overflow-hidden" style={{ background: "#1C1C1C" }}>
+    <div className="relative min-h-screen overflow-x-clip" style={{ background: "#1C1C1C" }}>
       <WindmillBackground />
 
       {/* top stripe */}
