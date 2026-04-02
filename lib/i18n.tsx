@@ -189,6 +189,56 @@ export const translations = {
       "Betrouwbaarder dan officiële feedback",
     ],
 
+    // Gate selector
+    gateChoose: "KIES UW TOEGANGSPOORT",
+    gateQuestion: "Hoe wil je binnenkomen?",
+    gateHpHint: "Type de incantatie",
+    gateLotRHint: "Speak, friend, and enter",
+    gateDhlSubtitle: "Pakket bezorging",
+    gateDhlHint: "Volg uw waybill",
+
+    // DHL gate
+    dhlDeliveryTitle: "BEZORGINGSBERICHT · ADC TEAM",
+    dhlDeliveryMsg: "Uw pakket staat klaar voor bezorging.\nVoer uw waybillnummer in om te volgen.",
+    dhlRef: "Ref:",
+    dhlWaybillLabel: "WAYBILL",
+    dhlWaybillPlaceholder: "Voer waybill in...",
+    dhlDigits: (n: number, total: number) => `${n} / ${total} cijfers`,
+    dhlStep1: "Pakketinfo ontvangen",
+    dhlStep2: "Vertrokken uit depot",
+    dhlStep3: "Uit voor bezorging",
+    dhlStep4: "Bezorgd!",
+    dhlDelivered: "UW PAKKET IS BEZORGD — WELKOM",
+
+    // Phone easter egg
+    phoneIncoming: "INKOMEND GESPREK...",
+    phoneAnswered: "Gesprek beëindigd",
+    phoneCaller: "ADC Team",
+    phoneGotcha: "Oh, dus je kunt toch een telefoon opnemen binnen de 10 seconden?",
+    phoneGotchaSub: "Misschien op je werk ook eens proberen....",
+    phoneHangUp: "Ophangen",
+
+    // Donate button
+    donateCauses: [
+      "Fillers & Botox voor Solange & Vicky",
+      "Haartransplantatie voor Ruben & Dominique",
+      "Pokémonkaarten voor het goede doel (Dominique)",
+      "Een te gek teamuitje bij Ruben z'n ouders thuis",
+      "Eindelijk een normale auto voor Claire die niet iedere 3 weken kapotgaat (en een dak heeft)",
+    ],
+    donateFor: "Ik doneer voor:",
+    donateAmount: "BEDRAG (€)",
+    donatePlaceholder: "0,00",
+    donateBtn: "Doneer",
+    donatePay: (amount: string) => `Betaal via PayPal${amount ? ` €${amount}` : ""}`,
+    donateLoginRequired: "Log in om te doneren",
+    donateLoading: "Bezig...",
+    donateSafe: "Veilig betalen via PayPal",
+    donateGotcha: "Je dacht toch niet echt dat we hier geld gingen inzamelen....",
+    donateGotchaSub: "Beetje sus.....",
+    donateClose: "Sluiten",
+    donateRecipient: "Bestemmeling: ADC Team · België",
+
     // Days / months short
     daysShort: ["zo","ma","di","wo","do","vr","za"],
     monthsShort: ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"],
@@ -356,6 +406,57 @@ export const translations = {
       "Plus fiable que les retours officiels",
     ],
 
+    // Gate selector
+    gateChoose: "CHOISISSEZ VOTRE ENTRÉE",
+    gateQuestion: "Comment voulez-vous entrer ?",
+    gateHpHint: "Tapez l'incantation",
+    gateLotRHint: "Speak, friend, and enter",
+    gateDhlSubtitle: "Livraison de colis",
+    gateDhlHint: "Suivez votre lettre de voiture",
+
+    // DHL gate
+    dhlDeliveryTitle: "AVIS DE LIVRAISON · ÉQUIPE ADC",
+    dhlDeliveryMsg: "Votre colis est prêt pour la livraison.\nEntrez votre numéro de lettre de voiture.",
+    dhlRef: "Réf :",
+    dhlWaybillLabel: "LETTRE DE VOITURE",
+    dhlWaybillPlaceholder: "Entrez la lettre de voiture...",
+    dhlDigits: (n: number, total: number) => `${n} / ${total} chiffres`,
+    dhlStep1: "Informations reçues",
+    dhlStep2: "Parti du dépôt",
+    dhlStep3: "En cours de livraison",
+    dhlStep4: "Livré !",
+    dhlDelivered: "VOTRE COLIS EST LIVRÉ — BIENVENUE",
+
+    // Phone easter egg
+    phoneIncoming: "APPEL ENTRANT...",
+    phoneAnswered: "Conversation terminée",
+    phoneCaller: "Équipe ADC",
+    phoneGotcha: "Ah, donc vous pouvez décrocher un téléphone en moins de 10 secondes ?",
+    phoneGotchaSub: "Peut-être essayer ça au travail aussi....",
+    phoneHangUp: "Raccrocher",
+
+    // Donate button
+    donateCauses: [
+      "Fillers & Botox pour Solange & Vicky",
+      "Greffe de cheveux pour Ruben & Dominique",
+      "Cartes Pokémon pour la bonne cause (Dominique)",
+      "Une super sortie d'équipe chez les parents de Ruben",
+      "Enfin une voiture normale pour Claire qui ne tombe pas en panne toutes les 3 semaines (avec un toit).",
+    ],
+    donateFor: "Je donne pour :",
+    donateAmount: "MONTANT (€)",
+    donatePlaceholder: "0,00",
+    donateBtn: "Faire un don",
+    donatePay: (amount: string) => `Payer via PayPal${amount ? ` €${amount}` : ""}`,
+    donateLoginRequired: "Connectez-vous pour faire un don",
+    donateLoading: "Chargement...",
+    donateSafe: "Paiement sécurisé via PayPal",
+    donateGotcha: "Vous ne pensiez vraiment pas qu'on allait collecter de l'argent ici....",
+    donateGotchaSub: "Un peu suspect.....",
+    donateClose: "Fermer",
+    donateRecipient: "Destinataire : Équipe ADC · Belgique",
+
+    // Days / months short
     daysShort: ["di","lu","ma","me","je","ve","sa"],
     monthsShort: ["jan","fév","mar","avr","mai","jui","jul","aoû","sep","oct","nov","déc"],
     months: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],

@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/lib/i18n";
 
 export default function RingingPhone() {
+  const { t } = useLang();
   const [answered, setAnswered] = useState(false);
   const [open, setOpen]         = useState(false);
   const [hasGutter, setHasGutter] = useState(false);
@@ -64,7 +66,7 @@ export default function RingingPhone() {
         whileTap={answered ? {} : { scale: 0.95 }}
         aria-label="Telefoon opnemen"
       >
-        <PhoneSVG answered={answered} />
+        <PhoneSVG answered={answered} callerName={t.phoneCaller} answeredText={t.phoneAnswered} />
       </motion.button>
 
       {/* Label below phone */}
@@ -78,7 +80,7 @@ export default function RingingPhone() {
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
           >
-            INKOMEND GESPREK...
+            {t.phoneIncoming}
           </motion.p>
         )}
       </AnimatePresence>
@@ -120,7 +122,7 @@ export default function RingingPhone() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  Oh, dus je kunt toch een telefoon opnemen binnen de 10 seconden?
+                  {t.phoneGotcha}
                 </motion.p>
                 <motion.p
                   className="mt-3 font-boogaloo text-base"
@@ -129,7 +131,7 @@ export default function RingingPhone() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.55 }}
                 >
-                  Misschien op je werk ook eens proberen....
+                  {t.phoneGotchaSub}
                 </motion.p>
               </div>
               <div className="px-6 pb-6 pt-2">
@@ -140,7 +142,7 @@ export default function RingingPhone() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.9 }}
                 >
-                  Ophangen
+                  {t.phoneHangUp}
                 </motion.button>
               </div>
             </motion.div>
@@ -151,7 +153,7 @@ export default function RingingPhone() {
   );
 }
 
-function PhoneSVG({ answered }: { answered: boolean }) {
+function PhoneSVG({ answered, callerName, answeredText }: { answered: boolean; callerName: string; answeredText: string }) {
   return (
     <svg width="140" height="240" viewBox="0 0 140 240" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -196,7 +198,7 @@ function PhoneSVG({ answered }: { answered: boolean }) {
           <text x="70" y="88" textAnchor="middle" fontSize="26" fill="white">👤</text>
           {/* Caller name */}
           <text x="70" y="125" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.9)" fontFamily="Arial,sans-serif" fontWeight="bold">
-            ADC Team
+            {callerName}
           </text>
           <text x="70" y="138" textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.35)" fontFamily="Arial,sans-serif">
             Mobiel
@@ -219,7 +221,7 @@ function PhoneSVG({ answered }: { answered: boolean }) {
       ) : (
         <g>
           <text x="70" y="120" textAnchor="middle" fontSize="11" fill="rgba(255,255,255,0.25)" fontFamily="Arial,sans-serif">
-            Gesprek beëindigd
+            {answeredText}
           </text>
         </g>
       )}

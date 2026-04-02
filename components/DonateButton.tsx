@@ -3,19 +3,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
-
-const CAUSES = [
-  "Fillers & Botox voor Solange & Vicky",
-  "Haartransplantatie voor Ruben & Dominique",
-  "Pokémonkaarten voor het goede doel (Dominique)",
-  "Een te gek teamuitje bij Ruben z'n ouders thuis",
-  "Eindelijk een normale auto voor Claire die niet iedere 3 weken kapotgaat (en een dak heeft)",
-];
+import { useLang } from "@/lib/i18n";
 
 const PAYPAL_BLUE = "#003087";
 const PAYPAL_LIGHT = "#009cde";
 
 export default function DonateButton({ onDonated, floating = false }: { onDonated?: () => void; floating?: boolean }) {
+  const { t } = useLang();
+  const CAUSES = t.donateCauses as string[];
   const [hasGutter, setHasGutter] = useState(false);
   useEffect(() => { setHasGutter(window.innerWidth >= 1800); }, []);
   const { data: session } = useSession();
@@ -67,7 +62,7 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
         whileTap={{ scale: 0.96 }}
       >
         <PayPalLogo />
-        Doneer
+        {t.donateBtn}
       </motion.button>
 
       <AnimatePresence>
@@ -103,7 +98,7 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
               {step === "form" ? (
                 <div className="p-6">
                   <p style={{ color: "#333", fontWeight: 700, fontSize: "15px", marginBottom: "16px" }}>
-                    Ik doneer voor:
+                    {t.donateFor}
                   </p>
 
                   {/* Cause options */}
@@ -138,7 +133,7 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
                   {/* Amount */}
                   <div className="mb-5">
                     <p style={{ color: "#555", fontSize: "12px", fontWeight: 600, marginBottom: "6px", letterSpacing: "0.5px" }}>
-                      BEDRAG (€)
+                      {t.donateAmount}
                     </p>
                     <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ border: `1.5px solid ${amount ? PAYPAL_LIGHT : "#ddd"}`, background: "white" }}>
                       <span style={{ color: "#555", fontWeight: 700 }}>€</span>
@@ -164,11 +159,11 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
                     whileHover={{ filter: "brightness(1.1)" }}
                     whileTap={{ scale: 0.97 }}
                   >
-                    {loading ? "Bezig..." : !session ? "Log in om te doneren" : `Betaal via PayPal${amount ? ` €${parseFloat(amount).toFixed(2)}` : ""}`}
+                    {loading ? t.donateLoading : !session ? t.donateLoginRequired : t.donatePay(amount ? parseFloat(amount).toFixed(2) : "")}
                   </motion.button>
 
                   <p style={{ color: "#aaa", fontSize: "10px", textAlign: "center", marginTop: "10px" }}>
-                    Veilig betalen via PayPal
+                    {t.donateSafe}
                   </p>
                 </div>
               ) : (
@@ -189,6 +184,7 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
 }
 
 function GotchaScreen({ cause, amount, onClose }: { cause: string; amount: string; onClose: () => void }) {
+  const { t } = useLang();
   return (
     <motion.div
       className="p-8 text-center"
@@ -210,7 +206,7 @@ function GotchaScreen({ cause, amount, onClose }: { cause: string; amount: strin
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        Je dacht toch niet echt dat we hier geld gingen inzamelen....
+        {t.donateGotcha}
       </motion.p>
       <motion.p
         style={{ color: "#888", fontSize: "14px", marginTop: "8px" }}
@@ -218,7 +214,7 @@ function GotchaScreen({ cause, amount, onClose }: { cause: string; amount: strin
         animate={{ opacity: 1 }}
         transition={{ delay: 0.55 }}
       >
-        Beetje sus.....
+        {t.donateGotchaSub}
       </motion.p>
       <motion.button
         onClick={onClose}
@@ -230,7 +226,7 @@ function GotchaScreen({ cause, amount, onClose }: { cause: string; amount: strin
         whileHover={{ filter: "brightness(1.1)" }}
         whileTap={{ scale: 0.97 }}
       >
-        Sluiten
+        {t.donateClose}
       </motion.button>
     </motion.div>
   );
