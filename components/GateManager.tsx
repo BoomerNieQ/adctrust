@@ -6,28 +6,22 @@ import MaraudersGate from "./MaraudersGate";
 import MoriaGate from "./MoriaGate";
 import DHLGate from "./DHLGate";
 
-const LS_KEY = "gate-state";
+const SS_KEY = "gate-state";
 
-type GateState = { choice: string; done: boolean; date: string };
-
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
+type GateState = { choice: string; done: boolean };
 
 function loadState(): GateState | null {
   try {
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = sessionStorage.getItem(SS_KEY);
     if (!raw) return null;
-    const state = JSON.parse(raw) as GateState;
-    if (state.date !== today()) return null; // new day → reset
-    return state;
+    return JSON.parse(raw) as GateState;
   } catch {
     return null;
   }
 }
 
 function saveState(choice: string, done: boolean) {
-  localStorage.setItem(LS_KEY, JSON.stringify({ choice, done, date: today() }));
+  sessionStorage.setItem(SS_KEY, JSON.stringify({ choice, done }));
 }
 
 export default function GateManager({ children }: { children: ReactNode }) {
