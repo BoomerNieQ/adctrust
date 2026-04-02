@@ -183,7 +183,7 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
 
   if (floating) {
     if (!hasGutter) return null;
-    return <div className="fixed z-40" style={{ top: "55vh", left: "calc(50vw - 740px)" }}>{btn}</div>;
+    return <div className="fixed z-40" style={{ top: "55vh", right: "calc(50vw + 720px)" }}>{btn}</div>;
   }
   return btn;
 }

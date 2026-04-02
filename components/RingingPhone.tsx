@@ -30,7 +30,7 @@ export default function RingingPhone() {
   if (!hasGutter) return null;
 
   return (
-    <section className="fixed z-40 flex flex-col items-center" style={{ top: "30vh", right: "calc(50vw - 740px)" }}>
+    <section className="fixed z-40 flex flex-col items-center" style={{ top: "30vh", left: "calc(50vw + 720px)" }}>
       {/* Glow rings */}
       {!answered && (
         <>

@@ -15,8 +15,8 @@ function useRandomPosition() {
     setIsMobile(mobile || !hasGutter);
     if (!mobile && hasGutter) {
       setPos({
-        top:  `${25 + Math.random() * 45}vh`,
-        left: "calc(50vw - 740px)",
+        top: `${25 + Math.random() * 45}vh`,
+        left: "auto",
       });
     } else {
       setPos({ top: "0", left: "0" });
@@ -81,7 +81,7 @@ export default function RosineMemes() {
         <motion.button
           onClick={handleClick}
           className="fixed px-5 py-2.5 rounded-full font-boogaloo font-bold text-base shadow-xl z-20"
-          style={{ top: pos.top, left: pos.left, ...buttonStyle }}
+          style={{ top: pos.top, right: "calc(50vw + 720px)", left: "auto", ...buttonStyle }}
           whileHover={{ scale: 1.08, background: "rgba(212,5,17,0.28)" }}
           whileTap={{ scale: 0.93 }}
           animate={{ y: [0, -6, 0] }}
