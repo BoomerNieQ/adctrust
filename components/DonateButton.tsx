@@ -180,7 +180,7 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
   );
 
   if (floating) {
-    return <div className="fixed left-3 z-40" style={{ top: "55vh" }}>{btn}</div>;
+    return <div className="fixed z-40" style={{ top: "55vh", left: "max(16px, calc(50vw - 740px))" }}>{btn}</div>;
   }
   return btn;
 }

@@ -15,7 +15,7 @@ function useRandomPosition() {
     if (!mobile) {
       setPos({
         top:  `${25 + Math.random() * 45}vh`,
-        left: "12px",
+        left: "max(16px, calc(50vw - 740px))",
       });
     } else {
       setPos({ top: "0", left: "0" }); // unused on mobile

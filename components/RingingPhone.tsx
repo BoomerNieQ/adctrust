@@ -23,7 +23,7 @@ export default function RingingPhone() {
   }
 
   return (
-    <section className="fixed right-3 z-40 flex flex-col items-center" style={{ top: "30vh" }}>
+    <section className="fixed z-40 flex flex-col items-center" style={{ top: "30vh", right: "max(16px, calc(50vw - 740px))" }}>
       {/* Glow rings */}
       {!answered && (
         <>

@@ -29,7 +29,19 @@ export default function DonationWallboard() {
     return () => { clearInterval(interval); window.removeEventListener("donation-made", onDonation); };
   }, [load]);
 
-  if (attempts.length === 0) return null;
+  if (attempts.length === 0) return (
+    <section className="relative z-10 px-4 sm:px-6 pb-12 max-w-[1400px] mx-auto">
+      <div className="rounded-2xl px-6 py-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+        <div className="flex items-center gap-3">
+          <span style={{ fontSize: "22px" }}>🏆</span>
+          <div>
+            <p className="font-boogaloo text-white text-base">Wall of Sus Donateurs</p>
+            <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px" }}>Nog niemand sus genoeg geweest... tot nu toe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 
   return (
     <section className="relative z-10 px-4 sm:px-6 pb-12 max-w-[1400px] mx-auto">

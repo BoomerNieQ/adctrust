@@ -6,11 +6,15 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const attempts = await (prisma as any).donationAttempt.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
-  return NextResponse.json(attempts);
+  try {
+    const attempts = await (prisma as any).donationAttempt.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+    });
+    return NextResponse.json(attempts);
+  } catch {
+    return NextResponse.json([]);
+  }
 }
 
 export async function POST(req: Request) {
@@ -21,8 +25,12 @@ export async function POST(req: Request) {
   if (!cause || !amount) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   const name = `${session.user.firstName} ${session.user.lastName}`;
-  const attempt = await (prisma as any).donationAttempt.create({
-    data: { name, cause, amount: parseFloat(amount) },
-  });
-  return NextResponse.json(attempt);
+  try {
+    const attempt = await (prisma as any).donationAttempt.create({
+      data: { name, cause, amount: parseFloat(amount) },
+    });
+    return NextResponse.json(attempt);
+  } catch {
+    return NextResponse.json({ error: "DB not ready" }, { status: 503 });
+  }
 }
