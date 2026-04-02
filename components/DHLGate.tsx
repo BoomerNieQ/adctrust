@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, ReactNode, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const STORAGE_KEY = "dhl-gate-access";
@@ -21,10 +21,25 @@ export default function DHLGate({ children, onComplete }: { children: ReactNode;
   const [tracking,  setTracking]    = useState(false);
   const [step,      setStep]        = useState(-1);
   const [delivered, setDelivered]   = useState(false);
+  const [input,     setInput]       = useState("");
+  const [shake,     setShake]       = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_KEY) === "1") setDismissed(true);
   }, []);
+
+  function handleInput(val: string) {
+    const digits = val.replace(/\D/g, "").slice(0, WAYBILL.length);
+    setInput(digits);
+    if (digits === WAYBILL) startTracking();
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter" && input !== WAYBILL) {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    }
+  }
 
   function startTracking() {
     setTracking(true);
@@ -91,34 +106,54 @@ export default function DHLGate({ children, onComplete }: { children: ReactNode;
         <div className="h-1" style={{ background: `linear-gradient(to right, ${RED} 50%, ${YELLOW} 50%)` }} />
 
         <div className="p-6">
-          {/* Waybill number */}
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px", letterSpacing: "3px", marginBottom: "4px" }}>
-            WAYBILL
-          </p>
-          <p style={{ color: "white", fontFamily: "monospace", fontSize: "20px", letterSpacing: "4px", marginBottom: "4px" }}>
-            {WAYBILL}
-          </p>
-          <p style={{ color: "rgba(255,255,255,0.22)", fontSize: "11px", marginBottom: "20px" }}>
-            Bestemmeling: ADC Team · België
-          </p>
+          {/* Shipping notification */}
+          <div
+            className="rounded-lg p-3 mb-5"
+            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+          >
+            <p style={{ color: "rgba(255,255,255,0.28)", fontSize: "9px", letterSpacing: "2px", marginBottom: "6px" }}>
+              BEZORGINGSBERICHT · ADC TEAM
+            </p>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", lineHeight: 1.6 }}>
+              Uw pakket staat klaar voor bezorging.<br />
+              Voer uw waybillnummer in om te volgen.
+            </p>
+            <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "10px", marginTop: "6px", fontFamily: "monospace", letterSpacing: "2px" }}>
+              Ref: {WAYBILL.slice(0, 4)} **** {WAYBILL.slice(-2)}
+            </p>
+          </div>
 
           {!tracking ? (
-            <motion.button
-              onClick={startTracking}
-              className="w-full py-3 rounded font-bold text-sm"
-              style={{
-                background: RED,
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-                letterSpacing: "3px",
-                fontSize: "12px",
-              }}
-              whileHover={{ filter: "brightness(1.15)" }}
-              whileTap={{ scale: 0.97 }}
-            >
-              PAKKET VOLGEN
-            </motion.button>
+            <div>
+              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px", letterSpacing: "3px", marginBottom: "8px" }}>
+                WAYBILL
+              </p>
+              <motion.div animate={shake ? { x: [-6, 6, -5, 5, -3, 3, 0] } : { x: 0 }} transition={{ duration: 0.4 }}>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={input}
+                  onChange={(e) => handleInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Voer waybill in..."
+                  maxLength={10}
+                  autoFocus
+                  className="w-full py-3 px-4 rounded outline-none"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: `1px solid ${shake ? RED : "rgba(255,255,255,0.15)"}`,
+                    color: "white",
+                    fontFamily: "monospace",
+                    fontSize: "18px",
+                    letterSpacing: "4px",
+                    transition: "border-color 0.2s",
+                  }}
+                />
+              </motion.div>
+              <p style={{ color: "rgba(255,255,255,0.15)", fontSize: "10px", marginTop: "8px", textAlign: "center" }}>
+                {input.length} / {WAYBILL.length} cijfers
+              </p>
+            </div>
           ) : (
             <div className="space-y-4">
               {STEPS.map((s, i) => (
