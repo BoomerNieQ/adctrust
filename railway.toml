@@ -1,2 +1,2 @@
 [deploy]
-releaseCommand = "prisma db push"
+releaseCommand = "prisma db push --accept-data-loss"

@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function RingingPhone() {
   const [answered, setAnswered] = useState(false);
   const [open, setOpen]         = useState(false);
+  const [hasGutter, setHasGutter] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    setHasGutter(window.innerWidth >= 1650);
+  }, []);
 
   useEffect(() => {
     audioRef.current = new Audio("/media/tubular-bells.mp3");
@@ -22,8 +27,10 @@ export default function RingingPhone() {
     setOpen(true);
   }
 
+  if (!hasGutter) return null;
+
   return (
-    <section className="fixed z-40 flex flex-col items-center" style={{ top: "30vh", right: "max(16px, calc(50vw - 740px))" }}>
+    <section className="fixed z-40 flex flex-col items-center" style={{ top: "30vh", right: "calc(50vw - 740px)" }}>
       {/* Glow rings */}
       {!answered && (
         <>

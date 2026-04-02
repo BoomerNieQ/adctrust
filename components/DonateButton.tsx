@@ -16,6 +16,8 @@ const PAYPAL_BLUE = "#003087";
 const PAYPAL_LIGHT = "#009cde";
 
 export default function DonateButton({ onDonated, floating = false }: { onDonated?: () => void; floating?: boolean }) {
+  const [hasGutter, setHasGutter] = useState(false);
+  useEffect(() => { setHasGutter(window.innerWidth >= 1650); }, []);
   const { data: session } = useSession();
   const [open, setOpen]           = useState(false);
   const [cause, setCause]         = useState("");
@@ -180,7 +182,8 @@ export default function DonateButton({ onDonated, floating = false }: { onDonate
   );
 
   if (floating) {
-    return <div className="fixed z-40" style={{ top: "55vh", left: "max(16px, calc(50vw - 740px))" }}>{btn}</div>;
+    if (!hasGutter) return null;
+    return <div className="fixed z-40" style={{ top: "55vh", left: "calc(50vw - 740px)" }}>{btn}</div>;
   }
   return btn;
 }

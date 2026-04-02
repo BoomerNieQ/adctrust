@@ -11,14 +11,15 @@ function useRandomPosition() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const mobile = window.innerWidth < 640;
-    setIsMobile(mobile);
-    if (!mobile) {
+    const hasGutter = window.innerWidth >= 1650;
+    setIsMobile(mobile || !hasGutter);
+    if (!mobile && hasGutter) {
       setPos({
         top:  `${25 + Math.random() * 45}vh`,
-        left: "max(16px, calc(50vw - 740px))",
+        left: "calc(50vw - 740px)",
       });
     } else {
-      setPos({ top: "0", left: "0" }); // unused on mobile
+      setPos({ top: "0", left: "0" });
     }
   }, []);
   return { pos, isMobile };
