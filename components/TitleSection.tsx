@@ -89,14 +89,16 @@ export default function TitleSection() {
             Dominique
           </span>
         </h1>
-        <button
-          className="text-white/35 font-boogaloo mt-1 text-sm select-none bg-transparent border-none p-0"
-          onClick={handleSubtitleClick}
-          style={{ cursor: "default", touchAction: "manipulation" }}
-          title="🤫"
-        >
-          {t.subtitle}
-        </button>
+        <div>
+          <button
+            className="text-white/35 font-boogaloo mt-1 text-sm select-none bg-transparent border-none p-0"
+            onClick={handleSubtitleClick}
+            style={{ cursor: "default", touchAction: "manipulation" }}
+            title="🤫"
+          >
+            {t.subtitle}
+          </button>
+        </div>
         <p
           className="mt-3 font-boogaloo text-base px-5 py-2 rounded-full inline-block"
           style={{
