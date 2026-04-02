@@ -6,6 +6,7 @@ const SOUNDS = [
   `/media/${encodeURIComponent("VUILE VIEZE SJELE ROTGEK.m4a")}`,
   `/media/${encodeURIComponent("Mafkees.m4a")}`,
   `/media/${encodeURIComponent("jullie zuipen meer als mij man.m4a")}`,
+  `/media/${encodeURIComponent("Duffuh.m4a")}`,
 ];
 
 export default function PinkFence({ className = "" }: { className?: string }) {
