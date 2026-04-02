@@ -11,7 +11,7 @@ function useRandomPosition() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const mobile = window.innerWidth < 640;
-    const hasGutter = window.innerWidth >= 1650;
+    const hasGutter = window.innerWidth >= 1800;
     setIsMobile(mobile || !hasGutter);
     if (!mobile && hasGutter) {
       setPos({

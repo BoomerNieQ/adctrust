@@ -17,7 +17,7 @@ const PAYPAL_LIGHT = "#009cde";
 
 export default function DonateButton({ onDonated, floating = false }: { onDonated?: () => void; floating?: boolean }) {
   const [hasGutter, setHasGutter] = useState(false);
-  useEffect(() => { setHasGutter(window.innerWidth >= 1650); }, []);
+  useEffect(() => { setHasGutter(window.innerWidth >= 1800); }, []);
   const { data: session } = useSession();
   const [open, setOpen]           = useState(false);
   const [cause, setCause]         = useState("");

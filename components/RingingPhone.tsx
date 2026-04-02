@@ -10,7 +10,7 @@ export default function RingingPhone() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    setHasGutter(window.innerWidth >= 1650);
+    setHasGutter(window.innerWidth >= 1800);
   }, []);
 
   useEffect(() => {
