@@ -50,6 +50,14 @@ model GuestbookReaction {
   @@unique([entryId, userId, emoji])
 }
 
+model DonationAttempt {
+  id        String   @id @default(cuid())
+  name      String
+  cause     String
+  amount    Float
+  createdAt DateTime @default(now())
+}
+
 model Birthday {
   id        String   @id @default(cuid())
   userId    String   @unique

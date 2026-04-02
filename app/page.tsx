@@ -16,6 +16,7 @@ import TitleSection from "@/components/TitleSection";
 import PageFooter from "@/components/PageFooter";
 import PageHeaderText from "@/components/PageHeaderText";
 import BaconEasterEgg from "@/components/BaconEasterEgg";
+import DonateSection from "@/components/DonateSection";
 
 async function getInitialData() {
   try {
@@ -94,6 +95,8 @@ export default async function Home() {
       <div className="relative z-10 w-full overflow-hidden" style={{ height: "64px", marginBottom: "8px" }}>
         <PinkFence className="w-full h-full" />
       </div>
+
+      <DonateSection />
 
       <PageFooter />
 
