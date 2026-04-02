@@ -8,10 +8,17 @@ export default function LanguageToggle() {
   const { lang, setLang } = useLang();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  const nlAudioRef = useRef<HTMLAudioElement | null>(null);
+
   function toggle() {
     const next = lang === "nl" ? "fr" : "nl";
     setLang(next);
     if (next === "fr") {
+      // Stop NL sound if playing
+      if (nlAudioRef.current) {
+        nlAudioRef.current.pause();
+        nlAudioRef.current.currentTime = 0;
+      }
       if (!audioRef.current) {
         audioRef.current = new Audio("/media/French meme song.mp3");
         audioRef.current.volume = 0.6;
@@ -25,10 +32,18 @@ export default function LanguageToggle() {
         }
       }, 8000);
     } else {
+      // Stop FR sound
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
+      // Play NL sound
+      if (!nlAudioRef.current) {
+        nlAudioRef.current = new Audio("/media/NL flag.m4a");
+        nlAudioRef.current.volume = 0.7;
+      }
+      nlAudioRef.current.currentTime = 0;
+      nlAudioRef.current.play().catch(() => {});
     }
   }
 
