@@ -8,7 +8,8 @@ export default function RingingPhone() {
   const { t } = useLang();
   const [answered,  setAnswered]  = useState(false);
   const [open,      setOpen]      = useState(false);
-  const [floating,  setFloating]  = useState<boolean | null>(null); // null = not yet measured
+  const [gone,      setGone]      = useState(false);
+  const [floating,  setFloating]  = useState<boolean | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -27,7 +28,12 @@ export default function RingingPhone() {
     setOpen(true);
   }
 
-  // Wait for measurement to avoid flash
+  function handleClose() {
+    setOpen(false);
+    // Fade the phone out after the modal closes
+    setTimeout(() => setGone(true), 300);
+  }
+
   if (floating === null) return null;
 
   const wrapStyle = floating
@@ -35,42 +41,53 @@ export default function RingingPhone() {
     : {};
 
   return (
-    <section className="flex flex-col items-center" style={wrapStyle}>
-      {/* Glow rings */}
-      {!answered && [1, 2, 3].map((i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full pointer-events-none"
-          style={{ width: `${180 + i * 80}px`, height: `${180 + i * 80}px`, border: "2px solid rgba(255,80,80,0.6)", boxShadow: "0 0 24px rgba(255,60,60,0.4)" }}
-          animate={{ scale: [1, 1.18, 1], opacity: [0.7, 0, 0.7] }}
-          transition={{ duration: 1.4, delay: i * 0.35, repeat: Infinity, ease: "easeOut" }}
-        />
-      ))}
-
-      <motion.button
-        onClick={handleAnswer}
-        style={{ background: "none", border: "none", cursor: answered ? "default" : "pointer", padding: 0, position: "relative", zIndex: 1 }}
-        animate={answered ? {} : { rotate: [-8, 8, -7, 7, -5, 5, 0], y: [0, -4, 0] }}
-        transition={{ duration: 0.55, repeat: answered ? 0 : Infinity, repeatDelay: 0.7 }}
-        whileHover={answered ? {} : { scale: 1.06 }}
-        whileTap={answered ? {} : { scale: 0.95 }}
-        aria-label={t.phoneIncoming}
-      >
-        <PhoneSVG answered={answered} callerName={t.phoneCaller} answeredText={t.phoneAnswered} />
-      </motion.button>
-
+    <>
       <AnimatePresence>
-        {!answered && (
-          <motion.p
-            className="mt-5 font-boogaloo text-sm text-center"
-            style={{ color: "rgba(255,100,100,0.85)", letterSpacing: "2px" }}
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.2, repeat: Infinity }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
+        {!gone && (
+          <motion.section
+            className="flex flex-col items-center"
+            style={wrapStyle}
+            exit={{ opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.4 }}
           >
-            {t.phoneIncoming}
-          </motion.p>
+            {/* Glow rings */}
+            {!answered && [1, 2, 3].map((i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full pointer-events-none"
+                style={{ width: `${180 + i * 80}px`, height: `${180 + i * 80}px`, border: "2px solid rgba(255,80,80,0.6)", boxShadow: "0 0 24px rgba(255,60,60,0.4)" }}
+                animate={{ scale: [1, 1.18, 1], opacity: [0.7, 0, 0.7] }}
+                transition={{ duration: 1.4, delay: i * 0.35, repeat: Infinity, ease: "easeOut" }}
+              />
+            ))}
+
+            <motion.button
+              onClick={handleAnswer}
+              style={{ background: "none", border: "none", cursor: answered ? "default" : "pointer", padding: 0, position: "relative", zIndex: 1 }}
+              animate={answered ? {} : { rotate: [-8, 8, -7, 7, -5, 5, 0], y: [0, -4, 0] }}
+              transition={{ duration: 0.55, repeat: answered ? 0 : Infinity, repeatDelay: 0.7 }}
+              whileHover={answered ? {} : { scale: 1.06 }}
+              whileTap={answered ? {} : { scale: 0.95 }}
+              aria-label={t.phoneIncoming}
+            >
+              <PhoneSVG answered={answered} callerName={t.phoneCaller} answeredText={t.phoneAnswered} />
+            </motion.button>
+
+            <AnimatePresence>
+              {!answered && (
+                <motion.p
+                  className="mt-5 font-boogaloo text-sm text-center"
+                  style={{ color: "rgba(255,100,100,0.85)", letterSpacing: "2px" }}
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1.2, repeat: Infinity }}
+                  initial={{ opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                >
+                  {t.phoneIncoming}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </motion.section>
         )}
       </AnimatePresence>
 
@@ -80,7 +97,7 @@ export default function RingingPhone() {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             style={{ background: "rgba(0,0,0,0.88)" }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
           >
             <motion.div
               className="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl text-center"
@@ -102,7 +119,7 @@ export default function RingingPhone() {
                 </motion.p>
               </div>
               <div className="px-6 pb-6 pt-2">
-                <motion.button onClick={() => setOpen(false)} className="text-white/30 text-xs font-boogaloo hover:text-white/55 transition-colors" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
+                <motion.button onClick={handleClose} className="text-white/30 text-xs font-boogaloo hover:text-white/55 transition-colors" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
                   {t.phoneHangUp}
                 </motion.button>
               </div>
@@ -110,7 +127,7 @@ export default function RingingPhone() {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </>
   );
 }
 

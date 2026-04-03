@@ -48,9 +48,13 @@ function VoteEntry({ vote, index }: { vote: VoteActivity; index: number }) {
 
       <div className="flex-1 min-w-0">
         <p className="text-white/80 text-sm font-boogaloo leading-snug">
-          {isPos
-            ? (t.activityVotedPos as (name: string) => string)(vote.firstName)
-            : (t.activityVotedNeg as (name: string) => string)(vote.firstName)}
+          {(() => {
+            const pool = isPos
+              ? (t.activityVotedPos as ((name: string) => string)[])
+              : (t.activityVotedNeg as ((name: string) => string)[]);
+            const idx = new Date(vote.createdAt).getTime() % pool.length;
+            return pool[idx](vote.firstName);
+          })()}
         </p>
         <p className="text-white/30 text-xs mt-0.5">{timeStr}</p>
       </div>
