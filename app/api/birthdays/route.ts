@@ -5,15 +5,19 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-  const birthdays = await prisma.birthday.findMany({
-    include: { user: { select: { firstName: true, lastName: true } } },
-    orderBy: [{ month: "asc" }, { day: "asc" }],
-  });
-  const myUserId = session?.user?.id ?? null;
-  const hasOwn = myUserId ? birthdays.some((b) => b.userId === myUserId) : false;
-  return NextResponse.json({ birthdays, hasOwn });
+export async function GET(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    const birthdays = await prisma.birthday.findMany({
+      include: { user: { select: { firstName: true, lastName: true } } },
+      orderBy: [{ month: "asc" }, { day: "asc" }],
+    });
+    const myUserId = session?.user?.id ?? null;
+    const hasOwn = myUserId ? birthdays.some((b) => b.userId === myUserId) : false;
+    return NextResponse.json({ birthdays, hasOwn });
+  } catch {
+    return NextResponse.json({ birthdays: [], hasOwn: false });
+  }
 }
 
 export async function POST(req: Request) {

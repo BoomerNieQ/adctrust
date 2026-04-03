@@ -45,6 +45,7 @@ export default function RingingPhone() {
       <AnimatePresence>
         {!gone && (
           <motion.section
+            key="phone"
             className="flex flex-col items-center"
             style={wrapStyle}
             exit={{ opacity: 0, scale: 0.7 }}

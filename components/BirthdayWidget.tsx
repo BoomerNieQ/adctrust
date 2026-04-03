@@ -26,9 +26,16 @@ export default function BirthdayWidget() {
   useEffect(() => {
     fetch("/api/birthdays")
       .then((r) => r.ok ? r.json() : { birthdays: [], hasOwn: false })
-      .then(({ birthdays, hasOwn: own }: { birthdays: BirthdayEntry[]; hasOwn: boolean }) => {
-        setEntries(birthdays);
-        setHasOwn(own);
+      .then((data: unknown) => {
+        // Handle both new format { birthdays, hasOwn } and old format []
+        if (Array.isArray(data)) {
+          setEntries(data);
+          if (session?.user?.id) setHasOwn(data.some((e) => e.userId === session.user.id));
+        } else {
+          const { birthdays = [], hasOwn: own = false } = (data as any) ?? {};
+          setEntries(birthdays);
+          setHasOwn(own);
+        }
       })
       .catch(() => {});
   }, [session]);
@@ -36,9 +43,15 @@ export default function BirthdayWidget() {
   async function fetchEntries() {
     const res = await fetch("/api/birthdays");
     if (res.ok) {
-      const { birthdays, hasOwn: own } = await res.json();
-      setEntries(birthdays);
-      setHasOwn(own);
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setEntries(data);
+        if (session?.user?.id) setHasOwn(data.some((e: any) => e.userId === session.user.id));
+      } else {
+        const { birthdays = [], hasOwn: own = false } = data ?? {};
+        setEntries(birthdays);
+        setHasOwn(own);
+      }
     }
   }
 
