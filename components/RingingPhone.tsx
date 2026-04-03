@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/lib/i18n";
 
@@ -9,12 +9,20 @@ export default function RingingPhone() {
   const [answered,  setAnswered]  = useState(false);
   const [open,      setOpen]      = useState(false);
   const [floating,  setFloating]  = useState<boolean | null>(null); // null = not yet measured
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     setFloating(window.innerWidth >= 1800);
+    const audio = new Audio("/media/Ringringring.mp3");
+    audio.loop = true;
+    audio.volume = 0.5;
+    audio.play().catch(() => {});
+    audioRef.current = audio;
+    return () => { audio.pause(); };
   }, []);
 
   function handleAnswer() {
+    audioRef.current?.pause();
     setAnswered(true);
     setOpen(true);
   }
@@ -23,7 +31,7 @@ export default function RingingPhone() {
   if (floating === null) return null;
 
   const wrapStyle = floating
-    ? { position: "fixed" as const, zIndex: 40, top: "30vh", right: "calc(50vw - 740px)" }
+    ? { position: "fixed" as const, zIndex: 40, bottom: "80px", right: "calc(50vw - 740px)" }
     : {};
 
   return (
