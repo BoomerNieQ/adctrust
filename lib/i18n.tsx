@@ -493,7 +493,7 @@ export const translations = {
     monthsShort: ["jan","fév","mar","avr","mai","jui","jul","aoû","sep","oct","nov","déc"],
     months: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],
   },
-} as const;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LangContext = createContext<{ lang: Lang; t: any; setLang: (l: Lang) => void }>({
