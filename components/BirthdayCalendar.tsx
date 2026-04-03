@@ -30,9 +30,12 @@ export default function BirthdayCalendar() {
   async function fetchEntries() {
     const res = await fetch("/api/birthdays");
     if (res.ok) {
-      const data: BirthdayEntry[] = await res.json();
+      const raw = await res.json();
+      const data: BirthdayEntry[] = Array.isArray(raw) ? raw : (raw.birthdays ?? []);
+      const own: boolean = Array.isArray(raw) ? false : (raw.hasOwn ?? false);
       setEntries(data);
-      if (session?.user) {
+      setHasOwn(own);
+      if (!own && session?.user) {
         const userId = (session.user as any).id;
         setHasOwn(data.some((e: any) => e.userId === userId));
       }

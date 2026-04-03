@@ -17,8 +17,8 @@ export default function BirthdayBanner() {
 
   useEffect(() => {
     fetch("/api/birthdays")
-      .then((r) => r.ok ? r.json() : [])
-      .then(setEntries)
+      .then((r) => r.ok ? r.json() : { birthdays: [] })
+      .then((data) => setEntries(Array.isArray(data) ? data : (data.birthdays ?? [])))
       .catch(() => {});
   }, []);
 

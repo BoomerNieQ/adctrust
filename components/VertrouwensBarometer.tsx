@@ -307,7 +307,8 @@ export default function VertrouwensBarometer({ initialData }: VertrouwensBaromet
               try {
                 const res = await fetch("/api/birthdays");
                 if (res.ok) {
-                  const entries: Array<{ day: number; month: number; user: { firstName: string; lastName: string } }> = await res.json();
+                  const raw = await res.json();
+                  const entries: Array<{ day: number; month: number; user: { firstName: string; lastName: string } }> = Array.isArray(raw) ? raw : (raw.birthdays ?? []);
                   const today = new Date();
                   const names = entries
                     .filter((e) => e.day === today.getDate() && e.month === today.getMonth() + 1)
