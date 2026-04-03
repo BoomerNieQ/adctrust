@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const attempts = await (prisma as any).donationAttempt.findMany({
+    const attempts = await prisma.donationAttempt.findMany({
       orderBy: { createdAt: "desc" },
       take: 50,
     });
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
   const name = `${session.user.firstName} ${session.user.lastName}`;
   try {
-    const attempt = await (prisma as any).donationAttempt.create({
+    const attempt = await prisma.donationAttempt.create({
       data: { name, cause, amount: parseFloat(amount) },
     });
     return NextResponse.json(attempt);

@@ -138,14 +138,18 @@ export const translations = {
     activityTotal: (n: number) => `${n} ${n === 1 ? "stem" : "stemmen"} in totaal`,
     activityEmpty: "Nog geen stemmen. Wees de eerste!",
     activityRefresh: "Ververst elke 5 seconden",
-    activityHad: "had",
-    activityMore: "meer",
-    activityLess: "minder",
-    activityIn: "vertrouwen in",
+    activityVotedPos: (name: string) => `${name} staat vierkant achter Dominique! 💪`,
+    activityVotedNeg: (name: string) => `${name} heeft het even gehad met Dominique 💀`,
     activityJustNow: "zojuist",
     activityMinAgo: (m: number) => `${m} minuut${m !== 1 ? "en" : ""} geleden`,
     activityHourAgo: (h: number) => `${h} uur geleden`,
     activityDayAgo: (d: number) => `${d} dag${d !== 1 ? "en" : ""} geleden`,
+
+    // Exposed donations wallboard
+    exposedTitle: "😏 EXPOSED DONATIONS",
+    exposedSubtitle: "Gepakt. Rood op het gezicht. Voor altijd vastgelegd.",
+    exposedEmpty: "Nog niemand sus genoeg geweest... tot nu toe.",
+    exposedEntry: (name: string, cause: string, amount: string) => `${name} probeerde €${amount} te storten voor "${cause}" — klassiek.`,
 
     // Score counter
     scoreJustNow: "zojuist",
@@ -357,14 +361,18 @@ export const translations = {
     activityTotal: (n: number) => `${n} vote${n !== 1 ? "s" : ""} au total`,
     activityEmpty: "Pas encore de votes. Soyez le premier !",
     activityRefresh: "Actualisation toutes les 5 secondes",
-    activityHad: "a eu",
-    activityMore: "plus de",
-    activityLess: "moins de",
-    activityIn: "confiance en",
+    activityVotedPos: (name: string) => `${name} soutient Dominique à fond ! 💪`,
+    activityVotedNeg: (name: string) => `${name} a perdu confiance en Dominique 💀`,
     activityJustNow: "à l'instant",
     activityMinAgo: (m: number) => `il y a ${m} minute${m !== 1 ? "s" : ""}`,
     activityHourAgo: (h: number) => `il y a ${h} heure${h !== 1 ? "s" : ""}`,
     activityDayAgo: (d: number) => `il y a ${d} jour${d !== 1 ? "s" : ""}`,
+
+    // Exposed donations wallboard
+    exposedTitle: "😏 EXPOSED DONATIONS",
+    exposedSubtitle: "Pris en flagrant délit. Pour toujours gravé dans les annales.",
+    exposedEmpty: "Personne n'a encore été assez suspect... pour l'instant.",
+    exposedEntry: (name: string, cause: string, amount: string) => `${name} a tenté de verser €${amount} pour "${cause}" — classique.`,
 
     scoreJustNow: "à l'instant",
     scoreMinAgo: (m: number) => `il y a ${m} minute${m !== 1 ? "s" : ""}`,

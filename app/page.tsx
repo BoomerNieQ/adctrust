@@ -18,6 +18,7 @@ import PageHeaderText from "@/components/PageHeaderText";
 import BaconEasterEgg from "@/components/BaconEasterEgg";
 import DonateButton from "@/components/DonateButton";
 import RingingPhone from "@/components/RingingPhone";
+import DonationWallboard from "@/components/DonationWallboard";
 
 async function getInitialData() {
   try {
@@ -91,6 +92,9 @@ export default async function Home() {
       <section className="relative z-10 px-4 sm:px-6 pb-16 max-w-[1400px] mx-auto">
         <StatsSection />
       </section>
+
+      {/* Exposed donations wallboard */}
+      <DonationWallboard />
 
       {/* Pink fence decoration */}
       <div className="relative z-10 w-full overflow-hidden" style={{ height: "64px", marginBottom: "8px" }}>
